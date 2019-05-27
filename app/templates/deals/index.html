@@ -1,0 +1,41 @@
+{% extends 'common/backend_template.html' %}
+{% block content %}
+<div class="row">
+
+    <!-- Right Sidebar -->
+    <div class="col-12">
+      <div class="card-box">
+        <h4 class="text-dark  header-title m-t-0">Submitted Deals</h4>
+        <p class="text-muted m-b-25 font-13">
+            These deals have been submitted to you.
+        </p>
+
+        <table class="table mb-0">
+          <thead>
+          <tr>
+              <th>#</th>
+              <th>Address</th>
+              <th>Submitted By</th>
+              <th>Contract Value</th>
+              <th>ARV</th>
+              <th>Rehab</th>
+          </tr>
+          </thead>
+          <tbody>
+            {% for deal in deals|sort(attribute='id', reverse=True) %}
+              <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>{{ deal.address }}</td>
+                  <td>{{ deal.get_submitter() }}</td>
+                  <td>{{ deal.purchase_price|currency }}</td>
+                  <td>{{ deal.after_repair_value|currency }}</td>
+                  <td>{{ deal.rehab_estimate|currency }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div> <!-- end col-12 -->
+
+</div><!-- End row -->
+{% endblock %}
