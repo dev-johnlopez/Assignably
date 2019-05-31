@@ -23,7 +23,7 @@ class User(db.Model, UserMixin):
     active = db.Column(db.Boolean())
     confirmed_at = db.Column(db.DateTime())
 
-    api_key = db.Column(db.String(32), index=True, unique=True, default=b64encode(os.urandom(32)).decode('utf-8'))
+    api_key = db.Column(db.String(255), index=True, unique=True, default=b64encode(os.urandom(32)).decode('utf-8'))
 
     last_login_at = db.Column(db.DateTime())
     current_login_at = db.Column(db.DateTime())
