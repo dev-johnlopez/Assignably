@@ -32,8 +32,11 @@ def create_deal():
     deal.from_dict(data)
     db.session.add(deal)
     db.session.commit()
+    recipient = g.current_user.email
+    if g.current_user.getSettings().partnership_email_recipient is not None:
+        recipient = g.current_user.getSettings().partnership_email_recipient
     send_email('New Deal Notification!',
-                sender=current_app.config['ADMINS'][0], recipients=[g.current_user.email],
+                sender=current_app.config['ADMINS'][0], recipients=[recipient],
                 text_body=render_template('emails/new_deal.txt', user=g.current_user, deal=deal),
                 html_body=render_template('emails/new_deal.html', user=g.current_user, deal=deal),
                 attachments=[],

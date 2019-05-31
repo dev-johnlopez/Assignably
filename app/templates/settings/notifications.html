@@ -1,0 +1,37 @@
+{% extends 'common/backend_template.html' %}
+{% block content %}
+{% from "common/macros/_table_form.html" import render_field_with_errors %}
+<div class="row">
+
+    <!-- Right Sidebar -->
+    <div class="col-12">
+      <div class="card-box">
+        <h4 class="text-dark  header-title m-t-0">Current Notification Settings</h4>
+        <p class="text-muted m-b-25 font-13">
+            Set the email address for each notification email.
+        </p>
+        <form method="post">
+          {{ form.hidden_tag() }}
+          <table class="table mb-0">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Email Name</th>
+                <th>Send To</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr>
+                  <td>1</td>
+                  <td>New Partnership Request</td>
+                  <td>{{ render_field_with_errors(form.partnership_email_recipient, class="form-control") }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <input class="btn btn-primary" type="submit"></input>
+        </form>
+      </div>
+    </div> <!-- end col-12 -->
+
+</div><!-- End row -->
+{% endblock %}

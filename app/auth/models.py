@@ -48,6 +48,11 @@ class User(db.Model, UserMixin):
     def is_admin(self):
         return self.email in current_app.config['ADMINS']
 
+    def getSettings(self):
+        if self.settings is None:
+            self.settings = Settings()
+        return self.settings
+
     @staticmethod
     def check_api_key(api_key):
         user = User.query.filter_by(api_key=api_key).first()

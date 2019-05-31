@@ -13,13 +13,9 @@ bp = Blueprint('deals', __name__)
 @bp.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    form = SettingsForm()
-    if form.validate_on_submit():
-        pass
     deals = current_user.get_deals()
     return render_template('deals/index.html',
-                title='Notification Settings',
-                form=form,
+                title='Partnership Requests',
                 deals=deals)
 
 @bp.app_template_filter()
