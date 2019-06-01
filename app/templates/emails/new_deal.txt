@@ -3,13 +3,13 @@ Hello!,
 A new deal has been submitted to you!
 
 Submitted By: {{ deal.get_submitter().contact }}
-Contact Phone #: {{ deal.get_submitter().contact.phone }}
+Contact Phone: {{ deal.get_submitter().contact.phone }}
 Contact Email: {{ deal.get_submitter().contact.email }}
 
-<strong>{{ deal.address }}</strong>
-Bedrooms: {{ deal.bedrooms }} Bedrooms
-Bathrooms: {{ deal.bathrooms }} Bathrooms
-Sq Feet: {{ deal.sq_feet }} Sq. Feet
+{{ deal.address }}
+Bedrooms: {{ deal.bedrooms }}
+Bathrooms: {{ deal.bathrooms }}
+Sq Feet: {{ deal.sq_feet }}
 Rehab Estimate: {{ deal.rehab_estimate|currency }}
 ARV: {{ deal.after_repair_value|currency }}
 
