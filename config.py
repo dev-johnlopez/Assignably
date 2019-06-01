@@ -15,7 +15,7 @@ class Config(object):
     SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')
     SECURITY_EMAIL_SENDER = os.environ.get('SECURITY_EMAIL_SENDER')
     SECURITY_FLASH_MESSAGES = True
-    SEND_REGISTER_EMAIL = int(os.environ.get('SEND_REGISTER_EMAIL'))
+    SEND_REGISTER_EMAIL = False
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
