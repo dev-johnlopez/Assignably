@@ -27,9 +27,9 @@
                   <td>{{ loop.index }}</td>
                   <td>{{ deal.address }}</td>
                   <td>{{ deal.get_submitter() }}</td>
-                  <td>{{ deal.purchase_price|currency }}</td>
-                  <td>{{ deal.after_repair_value|currency }}</td>
-                  <td>{{ deal.rehab_estimate|currency }}</td>
+                  <td>{{ deal.purchase_price }}</td>
+                  <td>{{ deal.after_repair_value }}</td>
+                  <td>{{ deal.rehab_estimate }}</td>
               </tr>
             {% endfor %}
           </tbody>
