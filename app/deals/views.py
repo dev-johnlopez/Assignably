@@ -18,4 +18,8 @@ def index():
 
 @bp.app_template_filter()
 def currency(value):
-    return '${:,.2f}'.format(value)
+    if value is None:
+        return "N/a"
+    elif isinstance(value, int):
+        return '${:,.2f}'.format(value)
+    return value
