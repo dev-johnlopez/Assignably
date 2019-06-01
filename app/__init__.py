@@ -22,31 +22,6 @@ mail = Mail()
 geolocator = Nominatim(user_agent='Assignably')
 
 
-#class Config(object):
-#    DEBUG = os.environ.get('FLASK_DEBUG') or False
-#    SECRET_KEY = os.environ.get('SECRET_KEY')
-#    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-#        'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)),
-#                                    'app.db')
-#    SQLALCHEMY_TRACK_MODIFICATIONS = False
-#    LOG_TO_STDOUT = 1
-    # SECURITY_REGISTERABLE = True
-    # SECURITY_RECOVERABLE = True
-    # SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')
-    # SECURITY_EMAIL_SENDER = os.environ.get('SECURITY_EMAIL_SENDER')
-    # SECURITY_FLASH_MESSAGES = True
-    # SECURITY_SEND_REGISTER_EMAIL = False
-    # MAIL_SERVER = os.environ.get('MAIL_SERVER')
-    # MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
-    # MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
-    # MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-    # MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    # MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
-#    ADMINS = ['john@johnlopez.org']
-    # SECURITY_TRACKABLE = True
-#    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
-
-
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.wsgi_app = ProxyFix(app.wsgi_app)
