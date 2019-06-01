@@ -75,7 +75,9 @@ class Deal(db.Model):
     property_tax = db.Column(db.Integer)
     sq_feet = db.Column(db.Integer)
     bedrooms = db.Column(db.Integer)
+    bedrooms_str = db.Column(db.String(255))
     bathrooms = db.Column(db.Integer)
+    bathrooms_str = db.Column(db.String(255))
     after_repair_value = db.Column(db.Integer)
     rehab_estimate = db.Column(db.Integer)
     purchase_price = db.Column(db.Integer)
@@ -114,8 +116,8 @@ class Deal(db.Model):
         return data
 
     def from_dict(self, data):
-        for field in ['address', 'property_tax', 'sq_feet', 'bedrooms',
-                      'bathrooms', 'after_repair_value',
+        for field in ['address', 'property_tax', 'sq_feet', 'bedrooms_str',
+                      'bathrooms_str', 'after_repair_value',
                       'rehab_estimate',
                       'purchase_price', 'list_price',
                       'under_contract_ind', 'submitted_by']:
