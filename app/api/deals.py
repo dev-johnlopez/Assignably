@@ -5,6 +5,7 @@ from app.api import bp
 from app.api.auth import token_auth
 from app.api.errors import bad_request
 from app.email import send_email
+from flask_cors import cross_origin
 
 
 @bp.route('/deals/<int:id>', methods=['GET'])
@@ -21,6 +22,7 @@ def get_deals():
 
 @bp.route('/deals', methods=['POST'])
 @token_auth.login_required
+@cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 def create_deal():
     print("CREATING DEAL!!")
     data = request.get_json() or {}

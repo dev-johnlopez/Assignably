@@ -9,6 +9,7 @@ from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 from elasticsearch import Elasticsearch
 from geopy.geocoders import Nominatim
 
@@ -18,6 +19,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 security = Security()
 admin = Admin()
+cors = CORS()
 mail = Mail()
 geolocator = Nominatim(user_agent='Assignably')
 
@@ -32,6 +34,7 @@ def create_app(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
     mail.init_app(app)
+    cors.init_app(app)
 
     from app.api import bp as api_bp
     from app.deals.views import bp as deals_bp

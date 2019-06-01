@@ -10,6 +10,7 @@ enum==0.4.7
 Flask==1.0.3
 Flask-Admin==1.5.3
 Flask-BabelEx==0.9.3
+Flask-Cors==3.0.7
 Flask-HTTPAuth==3.3.0
 Flask-Login==0.4.1
 Flask-Mail==0.9.1
@@ -20,12 +21,14 @@ Flask-SQLAlchemy==2.4.0
 Flask-WTF==0.14.2
 geographiclib==1.49
 geopy==1.20.0
+gunicorn==19.7.1
 httpauth==0.3
 itsdangerous==1.1.0
 Jinja2==2.10.1
 Mako==1.0.10
 MarkupSafe==1.1.1
 passlib==1.7.1
+psycopg2==2.7.3.1
 pycparser==2.19
 python-dateutil==2.8.0
 python-dotenv==0.10.2
@@ -38,7 +41,3 @@ typing==3.6.6
 urllib3==1.25.3
 Werkzeug==0.15.4
 WTForms==2.2.1
-
-# requirements for Heroku
-psycopg2==2.7.3.1
-gunicorn==19.7.1
