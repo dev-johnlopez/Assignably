@@ -7,16 +7,16 @@ Contact Phone: {{ deal.get_submitter().contact.phone }}<br />
 Contact Email: {{ deal.get_submitter().contact.email }}</p>
 
 <p><strong>{{ deal.address }}</strong><br />
-Bedrooms: {{ deal.bedrooms }}<br />
-Bathrooms: {{ deal.bathrooms }}<br />
+Bedrooms: {{ deal.bedrooms_str }}<br />
+Bathrooms: {{ deal.bathrooms_str }}<br />
 Sq Feet: {{ deal.sq_feet }}<br />
-Rehab Estimate: {{ deal.rehab_estimate|currency }}<br />
-ARV: {{ deal.after_repair_value|currency }}<p>
+Rehab Estimate: {{ deal.rehab_estimate }}<br />
+ARV: {{ deal.after_repair_value }}<p>
 
 {% if deal.under_contract_ind %}
 <p>This deal is currently under contract.<br />
-Contract's Purchase Price: {{ deal.purchase_price|currency }}<br />
-This deal has been marketed at: {{ deal.list_price|currency }}</p>
+Contract's Purchase Price: {{ deal.purchase_price }}<br />
+This deal has been marketed at: {{ deal.list_price }}</p>
 {% else %}
 <p>It is now known if this deal is under contract.<p>
 {% endif %}

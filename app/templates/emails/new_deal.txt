@@ -7,16 +7,16 @@ Contact Phone: {{ deal.get_submitter().contact.phone }}
 Contact Email: {{ deal.get_submitter().contact.email }}
 
 {{ deal.address }}
-Bedrooms: {{ deal.bedrooms }}
-Bathrooms: {{ deal.bathrooms }}
+Bedrooms: {{ deal.bedrooms_str }}
+Bathrooms: {{ deal.bathrooms_str }}
 Sq Feet: {{ deal.sq_feet }}
-Rehab Estimate: {{ deal.rehab_estimate|currency }}
-ARV: {{ deal.after_repair_value|currency }}
+Rehab Estimate: {{ deal.rehab_estimate }}
+ARV: {{ deal.after_repair_value }}
 
 {% if deal.under_contract_ind %}
 This deal is currently under contract.
-Contract's Purchase Price: {{ deal.purchase_price|currency }}
-This deal has been marketed at: {{ deal.list_price|currency }}
+Contract's Purchase Price: {{ deal.purchase_price }}
+This deal has been marketed at: {{ deal.list_price }}
 {% else %}
 It is now known if this deal is under contract.
 {% endif %}
