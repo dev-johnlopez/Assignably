@@ -41,7 +41,7 @@ $(document).ready(function() {
         "under_contract_ind": parseInt($( "#under_contract_ind" ).val())
       }),
       beforeSend: function (xhr) {
-          xhr.setRequestHeader('Authorization', 'Bearer aTi1w16cjO7eLPJEpK9ry7HgpSPjezXEqqr28z6PydY=');
+          xhr.setRequestHeader('Authorization', 'Bearer YCHV9VsAWNlRdKYh3OlhaBLDodITjc8olta6+C5oUKU=');
           xhr.setRequestHeader('Content-Type', 'application/json');
       }
     }).done(function(data) {
