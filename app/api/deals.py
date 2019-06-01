@@ -22,6 +22,7 @@ def get_deals():
 @bp.route('/deals', methods=['POST'])
 @token_auth.login_required
 def create_deal():
+    print("CREATING DEAL!!")
     data = request.get_json() or {}
     if 'address' not in data \
         or 'sq_feet' not in data \
