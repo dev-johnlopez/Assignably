@@ -1,25 +1,25 @@
-Hello!,
+<p>Hello!,</p>
 
-A new deal has been submitted to you!
+<p>A new deal has been submitted to you!</p>
 
-Submitted By: {{ deal.get_submitter().contact }}
-Contact Phone #: {{ deal.get_submitter().contact.phone }}
-Contact Email: {{ deal.get_submitter().contact.email }}
+<p>Submitted By: {{ deal.get_submitter().contact }}<br />
+Contact Phone #: {{ deal.get_submitter().contact.phone }}<br />
+Contact Email: {{ deal.get_submitter().contact.email }}</p>
 
-<strong>{{ deal.address }}</strong>
-Bedrooms: {{ deal.bedrooms }} Bedrooms
-Bathrooms: {{ deal.bathrooms }} Bathrooms
-Sq Feet: {{ deal.sq_feet }} Sq. Feet
-Rehab Estimate: {{ deal.rehab_estimate|currency }}
-ARV: {{ deal.after_repair_value|currency }}
+<p><strong>{{ deal.address }}</strong><br />
+Bedrooms: {{ deal.bedrooms }} Bedrooms<br />
+Bathrooms: {{ deal.bathrooms }} Bathrooms<br />
+Sq Feet: {{ deal.sq_feet }} Sq. Feet<br />
+Rehab Estimate: {{ deal.rehab_estimate|currency }}<br />
+ARV: {{ deal.after_repair_value|currency }}<p>
 
 {% if deal.under_contract_ind %}
-This deal is currently under contract.
-Contract's Purchase Price: {{ deal.purchase_price|currency }}
-This deal has been marketed at: {{ deal.list_price|currency }}
+<p>This deal is currently under contract.<br />
+Contract's Purchase Price: {{ deal.purchase_price|currency }}<br />
+This deal has been marketed at: {{ deal.list_price|currency }}</p>
 {% else %}
-It is now known if this deal is under contract.
+<p>It is now known if this deal is under contract.<p>
 {% endif %}
 
-Sincerely,
-The Assignably Team
+<p>Sincerely,<br />
+The Assignably Team</p>
