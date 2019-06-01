@@ -6,15 +6,18 @@ from app.api.auth import token_auth
 from app.api.errors import bad_request
 from app.email import send_email
 
+
 @bp.route('/deals/<int:id>', methods=['GET'])
 @token_auth.login_required
 def get_deal(id):
     pass
 
+
 @bp.route('/deals', methods=['GET'])
 @token_auth.login_required
 def get_deals():
     return ''
+
 
 @bp.route('/deals', methods=['POST'])
 @token_auth.login_required
@@ -25,8 +28,7 @@ def create_deal():
         or 'bedrooms' not in data \
         or 'bathrooms' not in data \
         or 'after_repair_value' not in data \
-        or 'rehab_estimate' not in data \
-        or 'purchase_price' not in data:
+            or 'rehab_estimate' not in data or 'purchase_price' not in data:
         return bad_request('must include username, email and password fields')
     deal = Deal()
     deal.from_dict(data)
@@ -36,16 +38,21 @@ def create_deal():
     if g.current_user.getSettings().partnership_email_recipient is not None:
         recipient = g.current_user.getSettings().partnership_email_recipient
     send_email('New Deal Notification!',
-                sender='support@assignably.com', recipients=[recipient],
-                text_body=render_template('emails/new_deal.txt', user=g.current_user, deal=deal),
-                html_body=render_template('emails/new_deal.html', user=g.current_user, deal=deal),
-                attachments=[],
-                sync=True)
-    #send_deal_notification_email(g.current_user, deal)
+               sender='support@assignably.com', recipients=[recipient],
+               text_body=render_template('emails/new_deal.txt',
+                                         user=g.current_user,
+                                         deal=deal),
+               html_body=render_template('emails/new_deal.html',
+                                         user=g.current_user,
+                                         deal=deal),
+               attachments=[],
+               sync=True)
+
     response = jsonify(deal.to_dict())
     response.status_code = 201
     response.headers['Location'] = url_for('api.get_deal', id=deal.id)
     return response
+
 
 @bp.route('/deals/<int:id>', methods=['PUT'])
 @token_auth.login_required

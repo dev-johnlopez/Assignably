@@ -5,9 +5,6 @@ from app.settings.forms import SettingsForm
 
 bp = Blueprint('deals', __name__)
 
-#@bp.before_app_request
-#def before_request():
-#    g.search_form = SearchForm()
 
 @bp.route('/index', methods=['GET', 'POST'])
 @bp.route('/', methods=['GET', 'POST'])
@@ -15,8 +12,9 @@ bp = Blueprint('deals', __name__)
 def index():
     deals = current_user.get_deals()
     return render_template('deals/index.html',
-                title='Partnership Requests',
-                deals=deals)
+                           title='Partnership Requests',
+                           deals=deals)
+
 
 @bp.app_template_filter()
 def currency(value):

@@ -5,9 +5,6 @@ from .forms import SettingsForm
 
 bp = Blueprint('settings', __name__)
 
-#@bp.before_app_request
-#def before_request():
-#    g.search_form = SearchForm()
 
 @bp.route('/', methods=['GET', 'POST'])
 @login_required
@@ -19,5 +16,5 @@ def notifications():
         db.session.add(current_user.getSettings())
         db.session.commit()
     return render_template('settings/notifications.html',
-                title='Notifications',
-                form=form)
+                           title='Notifications',
+                           form=form)

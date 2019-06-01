@@ -8,10 +8,14 @@ import os
 from time import time
 
 roles_users = db.Table('roles_users',
-        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-        db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+                       db.Column('user_id',
+                                 db.Integer(),
+                                 db.ForeignKey('user.id')),
+                       db.Column('role_id',
+                                 db.Integer(),
+                                 db.ForeignKey('role.id')))
 
-# Define a User model
+
 class User(db.Model, UserMixin):
 
     __tablename__ = 'user'
@@ -23,7 +27,10 @@ class User(db.Model, UserMixin):
     active = db.Column(db.Boolean())
     confirmed_at = db.Column(db.DateTime())
 
-    api_key = db.Column(db.String(255), index=True, unique=True, default=b64encode(os.urandom(32)).decode('utf-8'))
+    api_key = db.Column(db.String(255),
+                        index=True,
+                        unique=True,
+                        default=b64encode(os.urandom(32)).decode('utf-8'))
 
     last_login_at = db.Column(db.DateTime())
     current_login_at = db.Column(db.DateTime())
@@ -33,7 +40,9 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
     contact = db.relationship("Contact", uselist=False, back_populates="user")
-    settings = db.relationship("Settings", uselist=False, back_populates="user")
+    settings = db.relationship("Settings",
+                               uselist=False,
+                               back_populates="user")
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -43,7 +52,8 @@ class User(db.Model, UserMixin):
         return '%s' % (self.email)
 
     def get_deals(self):
-        return [deal_contact.deal for deal_contact in self.contact.deal_contacts]
+        return [deal_contact.deal
+                for deal_contact in self.contact.deal_contacts]
 
     def is_admin(self):
         return self.email in current_app.config['ADMINS']
@@ -60,6 +70,7 @@ class User(db.Model, UserMixin):
             return None
         return user
 
+
 class Role(db.Model, RoleMixin):
     __tablename__ = 'role'
     id = db.Column(db.Integer, primary_key=True)
@@ -68,6 +79,7 @@ class Role(db.Model, RoleMixin):
 
     def __repr__(self):
         return '%s' % (self.name)
+
 
 class Settings(db.Model, UserMixin):
 
