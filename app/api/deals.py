@@ -28,11 +28,11 @@ def create_deal():
     data = request.get_json() or {}
     if 'address' not in data \
         or 'sq_feet' not in data \
-        or 'bedrooms' not in data \
-        or 'bathrooms' not in data \
+        or 'bedrooms_str' not in data \
+        or 'bathrooms_str' not in data \
         or 'after_repair_value' not in data \
             or 'rehab_estimate' not in data or 'purchase_price' not in data:
-        return bad_request('must include username, email and password fields')
+        return bad_request('Missing Required Fields.')
     deal = Deal()
     deal.from_dict(data)
     db.session.add(deal)
