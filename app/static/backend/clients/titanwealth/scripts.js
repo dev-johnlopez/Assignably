@@ -4,7 +4,7 @@ $(document).ready(function() {
   $('form').parsley();
   $( "#assignably_form" ).submit(function( event ) {
     event.preventDefault();
-    swal("Sending your deal...", "info");
+    swal("Sending your deal...", "", "info");
     $.ajax({
       url: 'https://assignably.herokuapp.com/api/deals',
       async:true,
