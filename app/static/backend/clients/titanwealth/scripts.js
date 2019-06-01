@@ -4,7 +4,12 @@ $(document).ready(function() {
   $('form').parsley();
   $( "#assignably_form" ).submit(function( event ) {
     event.preventDefault();
-    swal("Sending your deal...", "", "info");
+    swal({
+      title: 'Sending your deal...',
+      text: 'One moment while we process your deal.',
+      showCancelButton: false,
+      showConfirmButton: false
+    })
     $.ajax({
       url: 'https://assignably.herokuapp.com/api/deals',
       async:true,
@@ -40,7 +45,7 @@ $(document).ready(function() {
           xhr.setRequestHeader('Content-Type', 'application/json');
       }
     }).done(function(data) {
-        swal("Thank you!", "We have received your submission. Please sit tight - we are analyzing your submission and will follow up with you soon.", "success");
+        swal("Thank you!", "We have received your submission. Please sit tight - we are analyzing your deal and will call/email you soon.", "success");
     })
     .fail(function(xhr, status, error) {
         swal("Oh no!", "We were unable to process your request. Please email us at info@titanwealthgroup.com.", "error");
