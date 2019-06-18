@@ -72,7 +72,7 @@ class File(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
     description = db.Column(db.String(1500))
-    file_type = db.Column(db.Integer)
+    # file_type = db.Column(db.Integer)
     url = db.Column(db.String(500))
     deal_id = db.Column(db.Integer, db.ForeignKey('deal.id'))
     deal = db.relationship("Deal", back_populates="files")
