@@ -75,7 +75,7 @@ def iframe(user_id):
             deal.add_contact(deal_contact)
         for file in form.files:
             file = File(url=file.url,
-                        file_type=0)
+                        file_type=int(0))
             deal.add_file(file)
 
         form.populate_obj(deal)
