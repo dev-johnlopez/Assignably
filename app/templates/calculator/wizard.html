@@ -1,0 +1,120 @@
+{% extends 'common/backend_template.html' %}
+{% set data_mask = 1 %}
+{% set active_page = "proforma" %}
+{% block page_css %}
+<!--Form Wizard-->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='backend/plugins/jquery.steps/css/jquery.steps.css') }}" />
+{{ dropzone.load_css() }}
+{% endblock %}
+{% block content %}
+
+<!-- Basic Form Wizard -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card-box">
+            <h4 class="m-t-0 header-title"><b>Evaluate Deal</b></h4>
+            <p class="text-muted m-b-30 font-13">
+                Evaluate your deal.
+            </p>
+
+            <form id="basic-form" action="#" enctype='multipart/form-data'>
+                <div>
+                    <h3>Market Value</h3>
+                    <section>
+                        <div class="form-group clearfix">
+                            <label class="control-label" for="after_repair_value">User name *</label>
+                            <div class="">
+                                <input class="form-control required" id="after_repair_value" name="after_repair_value" type="text">
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                          {{ dropzone.create(action='deals.index') }}
+                        </div>
+
+                    </section>
+                    <h3>Rehab Estimates</h3>
+                    <section>
+                        <div class="form-group clearfix">
+
+                            <label class="control-label" for="name"> First name *</label>
+                            <div class="">
+                                <input id="name" name="name" type="text" class="required form-control">
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="control-label " for="surname"> Last name *</label>
+                            <div class="">
+                                <input id="surname" name="surname" type="text" class="required form-control">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="control-label " for="email">Email *</label>
+                            <div class="">
+                                <input id="email" name="email" type="text" class="required email form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="control-label " for="address">Address *</label>
+                            <div class="">
+                                <input id="address" name="address" type="text" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix">
+                            <label class="col-lg-12 control-label ">(*) Mandatory</label>
+                        </div>
+
+                    </section>
+                    <h3>Documents</h3>
+                    <section>
+                        <div class="form-group clearfix">
+                            <div class="col-lg-12">
+                                <ul class="list-unstyled w-list">
+                                    <li><b>First Name :</b> Jonathan </li>
+                                    <li><b>Last Name :</b> Smith </li>
+                                    <li><b>Emial:</b> jonathan@smith.com</li>
+                                    <li><b>Address:</b> 123 Your City, Cityname. </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <h3>Review & Finish</h3>
+                    <section>
+                        <div class="form-group clearfix">
+                            <div class="col-lg-12">
+                                <div class="checkbox checkbox-primary">
+                                    <input id="checkbox-h" type="checkbox">
+                                    <label for="checkbox-h">
+                                        I agree with the Terms and Conditions.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- End row -->
+
+
+{% endblock %}
+
+{% block page_javascript %}
+<!--Form Wizard-->
+<script src="{{ url_for('static', filename='backend/plugins/jquery.steps/js/jquery.steps.min.js') }}" type="text/javascript"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='backend/plugins/jquery-validation/js/jquery.validate.min.js') }}"></script>
+<!--wizard initialization-->
+<script src="{{ url_for('static', filename='backend/pages/jquery.wizard-init.js') }}" type="text/javascript"></script>
+
+<!-- Dropzone js -->
+{{ dropzone.load_js() }}
+
+{% endblock %}

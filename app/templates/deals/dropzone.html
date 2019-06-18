@@ -1,0 +1,230 @@
+{% extends 'common/backend_template.html' %}
+{% set data_mask = 1 %}
+{% set active_page = "proforma" %}
+{% block page_css %}
+<!--Form Wizard-->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='backend/plugins/jquery.steps/css/jquery.steps.css') }}" />
+{{ dropzone.load_css() }}
+{% endblock %}
+{% block content %}
+
+<!-- Basic Form Wizard -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card-box">
+            <h4 class="m-t-0 header-title"><b>Upload</b></h4>
+            <p class="text-muted m-b-30 font-13">
+                Upload as many files as you want.
+            </p>
+            <form class="form" id="submit-form" enctype="multipart/form-data" role="form" action="#">
+              <h3>Your Info</h3>
+              <hr />
+              <div class="form-group">
+                  <label for="first_name">First Name</label>
+                  <input type="text" id="first_name" class="form-control" required>
+              </div>
+              <div class="form-group">
+                  <label for="last_name">Last Name</label>
+                  <input type="text" id="last_name" class="form-control" required>
+              </div>
+              <div class="form-group">
+                  <label for="phone_number">Phone Number</label>
+                  <input type="text" id="phone_number" class="form-control" required>
+              </div>
+              <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" class="form-control" required>
+              </div>
+              <br />
+              <h3>Property Address</h3>
+              <hr />
+              <div class="form-group">
+                  <label for="line_1">Address Line 1</label>
+                  <input type="text" id="line_1" class="form-control" required>
+              </div>
+              <div class="form-group">
+                  <label for="line_2">Unit #</label>
+                  <input type="text" id="line_2" class="form-control">
+              </div>
+              <div class="form-group">
+                  <label for="city">City</label>
+                  <input type="text" id="city" class="form-control" required>
+              </div>
+              <div class="form-group">
+                  <label for="state_code">State</label>
+                  <select class="form-control" id="state_code"  required>
+                    <option value="IL">IL</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="postal_code">Zip Code</label>
+                  <input type="text" id="postal_code" class="form-control" required>
+              </div>
+              <br />
+              <h3>Property Details</h3>
+              <hr />
+              <div class="form-group">
+                  <label for="property_tax">Property Taxes</label>
+                  <input type="text" id="property_tax" class="form-control" required>
+              </div>
+              <div class="form-group">
+                  <label for="sq_feet">Sq. Feet</label>
+                  <input type="text" id="sq_feet" class="form-control" required>
+              </div>
+              <div class="form-group">
+                  <label for="bedrooms">Bedrooms</label>
+                  <input type="text" id="bedrooms" class="form-control" required>
+              </div>
+              <div class="form-group">
+                  <label for="bathrooms">Bathrooms</label>
+                  <input type="text" id="bathrooms" class="form-control" required>
+              </div>
+              <div class="form-group">
+                  <label for="after_repair_value">ARV</label>
+                  <input type="text" id="after_repair_value" class="form-control" required>
+              </div>
+              <div class="form-group">
+                  <label for="rehab_estimate">Rehab (Est.)</label>
+                  <input type="text" id="rehab_estimate" class="form-control" required>
+              </div>
+              <div class="form-group">
+                  <label for="under_contract_ind">Under Contract?</label>
+                  <select class="form-control" id="under_contract_ind" required>
+                    <option value="" selected></option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="purchase_price">Purchase Agreement Amount</label>
+                  <input type="text" id="purchase_price" class="form-control">
+              </div>
+              <div class="form-group">
+                  <label for="list_price">List Price</label>
+                  <input type="text" id="list_price" class="form-control">
+              </div>
+              <br />
+              <h3>Photos</h3>
+              <hr />
+              <div class="form-group">
+              <div class="dropzone dropzone-previews" id="imageUpload">
+              </div>
+              </div>
+              <div class="form-group">
+              <button type="submit" class="btn btn-primary waves-effect waves-light">
+                  Submit
+              </button>
+              </div>
+            </form>
+
+            {#{{ dropzone.create(action= url_for('deals.upload', deal_id=deal.id) ) }}#}
+
+        </div>
+    </div>
+</div>
+
+<!-- End row -->
+
+
+{% endblock %}
+
+{% block page_javascript %}
+<!-- Dropzone js -->
+{{ dropzone.load_js() }}
+
+<script>
+  Dropzone.autoDiscover = false
+
+  myDropzone = new Dropzone('div#imageUpload', {
+      addRemoveLinks: true,
+      autoProcessQueue: true,
+      uploadMultiple: false,
+      parallelUploads: 100,
+      method: "POST",
+      maxFiles: 3,
+      paramName: 'file',
+      clickable: true,
+      url: '#',
+      init: function () {
+
+          var myDropzone = this;
+
+          // First change the button to actually tell Dropzone to process the queue.
+          $("button[type=submit]").on("click", function(e) {
+            // Make sure that the form isn't actually being sent.
+            e.preventDefault();
+            e.stopPropagation();
+            //myDropzone.processQueue();
+          });
+
+          // Set signed upload URL for each file being processing
+          this.on('processing', (file) => {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type, false);
+            xhr.onreadystatechange = function(){
+              if(xhr.readyState === 4){
+                if(xhr.status === 200){
+                  var response = JSON.parse(xhr.responseText);
+                  file.postData = response.data;
+                  file.url = response.data.url;
+                  myDropzone.options.url = response.data.url
+                }
+                else{
+                  myDropzone.options.url = "";
+                  alert("Error uploading file.");
+                }
+              }
+            };
+            xhr.send();
+          })
+
+          this.on("sending", function(file, xhr, formData){
+            for(key in file.postData.fields){
+              formData.append(key, file.postData.fields[key]);
+            }
+          });
+      },
+      error: function (file, response){
+          if ($.type(response) === "string")
+              var message = response; //dropzone sends it's own error messages in string
+          else
+              var message = response.message;
+          file.previewElement.classList.add("dz-error");
+          _ref = file.previewElement.querySelectorAll("[data-dz-errormessage]");
+          _results = [];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              node = _ref[_i];
+              _results.push(node.textContent = message);
+          }
+          return _results;
+      },
+      successmultiple: function (file, response) {
+        console.log(file, response);
+        //$modal.modal("show");
+      },
+      success: function(file, response) {
+        console.log(file, response);
+      },
+      complete: function(file, response) {
+        $(".dz-progress").remove();
+        var nextID = $('.yourclass').length;
+        $("<input type='text'/>")
+           .attr("id", "form-" + nextID + "-url");
+           .attr("name", "myfieldid")
+           .attr("class", "uploaded-file");
+           .attr("value", file.url + file.postData.fields.key)
+           .appendTo("#submit-form");
+        console.log(file, response);
+      },
+      completemultiple: function (file, response) {
+        console.log(file, response, "completemultiple");
+      },
+      reset: function () {
+          console.log("resetFiles");
+          this.removeAllFiles(true);
+      }
+  });
+</script>
+
+
+{% endblock %}

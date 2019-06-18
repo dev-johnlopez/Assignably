@@ -15,10 +15,10 @@
           <tr>
               <th>#</th>
               <th>Address</th>
-              <th>Submitted By</th>
               <th>Contract Value</th>
               <th>ARV</th>
               <th>Rehab</th>
+              <th>Actions</th>
           </tr>
           </thead>
           <tbody>
@@ -26,10 +26,13 @@
               <tr>
                   <td>{{ loop.index }}</td>
                   <td>{{ deal.address }}</td>
-                  <td>{{ deal.get_submitter()|currency }}</td>
                   <td>{{ deal.purchase_price|currency }}</td>
                   <td>{{ deal.after_repair_value|currency }}</td>
                   <td>{{ deal.rehab_estimate|currency }}</td>
+                  <td>
+                    <a href="{{ url_for('calculator.create', deal_id=deal.id) }}" class="btn btn-success">Evaluate</a>
+                    <a href="{{ url_for('deals.delete', deal_id=deal.id) }}" class="btn btn-danger">Delete</a>
+                  </td>
               </tr>
             {% endfor %}
           </tbody>

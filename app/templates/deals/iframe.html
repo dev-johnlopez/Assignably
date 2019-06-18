@@ -1,0 +1,19 @@
+
+{{ dropzone.load_css() }}
+<!-- App css -->
+<link href="{{ url_for('static', filename='backend/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for('static', filename='backend/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for('static', filename='backend/css/app.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for('static', filename='backend/css/external-style.css') }}" rel="stylesheet" type="text/css" />
+<style type="text/css">
+   body { background: transparent !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
+</style>
+
+<div style="background-color: transparent;">
+{% include 'deals/forms/create.html' %}
+
+<script src="{{ url_for('static', filename='backend/js/vendor.min.js') }}"></script>
+{% include 'deals/scripts/dropzone.html' %}
+
+<script scrc="{{ url_for('static', filename='backend/js/app.min.js') }}"></script>"
+</div>

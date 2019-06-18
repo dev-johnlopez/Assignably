@@ -1,0 +1,56 @@
+{% from "common/macros/_vertical_form.html" import render_field_with_errors, render_monetary_field_with_errors %}
+
+
+<form class="form" enctype="multipart/form-data" method="post" role="form" action="#" id="submit-form">
+  {{ form.hidden_tag() }}
+  <h4 class="header-title mt-4">Your Info</h4>
+  <hr />
+  {% for contact_form in form.contacts %}
+    {{ contact_form.hidden_tag() }}
+    {{ contact_form.contact.hidden_tag() }}
+    {{ render_field_with_errors(contact_form.contact.first_name, class="form-control", required=True) }}
+    {{ render_field_with_errors(contact_form.contact.last_name, class="form-control", required=True) }}
+    {{ render_field_with_errors(contact_form.contact.phone, class="form-control", required=True) }}
+    {{ render_field_with_errors(contact_form.contact.email, class="form-control", required=True) }}
+  {% endfor %}
+  <hr />
+  <h4 class="header-title mt-4">Property Address</h4>
+  <hr />
+  {{ form.address.hidden_tag() }}
+  {{ render_field_with_errors(form.address.line_1, class="form-control", required=True) }}
+  {{ render_field_with_errors(form.address.line_2, class="form-control") }}
+  {{ render_field_with_errors(form.address.city, class="form-control", required=True) }}
+  {{ render_field_with_errors(form.address.state_code, class="form-control", required=True) }}
+  {{ render_field_with_errors(form.address.postal_code, class="form-control", required=True) }}
+  <br />
+  <h4 class="header-title mt-4">Property Details</h4>
+  <hr />
+  {{ render_monetary_field_with_errors(form.property_tax, class="form-control", required=True) }}
+  {{ render_field_with_errors(form.sq_feet, class="form-control", required=True) }}
+  {{ render_field_with_errors(form.bedrooms, class="form-control", required=True) }}
+  {{ render_field_with_errors(form.bathrooms, class="form-control", required=True) }}
+  {{ render_monetary_field_with_errors(form.after_repair_value, class="form-control", required=True) }}
+  {{ render_monetary_field_with_errors(form.rehab_estimate, class="form-control", required=True) }}
+  <div class="form-group">
+      <label for="under_contract_ind">Under Contract?</label>
+      <select class="form-control" id="under_contract_ind" required>
+        <option value="" selected></option>
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+      </select>
+  </div>
+  {{ render_monetary_field_with_errors(form.purchase_price, class="form-control", required=True) }}
+  {{ render_monetary_field_with_errors(form.list_price, class="form-control", required=True) }}
+  <br />
+  <h4 class="header-title mt-4">Photos</h4>
+  <hr />
+  <div class="form-group">
+    <div class="dropzone dropzone-previews" id="imageUpload">
+    </div>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary waves-effect waves-light">
+        Submit
+    </button>
+  </div>
+</form>

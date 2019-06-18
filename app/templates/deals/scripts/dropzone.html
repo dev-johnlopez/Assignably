@@ -1,0 +1,88 @@
+{{ dropzone.load_js() }}
+
+<script>
+  Dropzone.autoDiscover = false
+
+  myDropzone = new Dropzone('div#imageUpload', {
+      addRemoveLinks: true,
+      acceptedFiles: "image/*",
+      autoProcessQueue: true,
+      uploadMultiple: false,
+      parallelUploads: 100,
+      method: "POST",
+      maxFiles: 50,
+      paramName: 'file',
+      clickable: true,
+      url: '#',
+      init: function () {
+
+          var myDropzone = this;
+
+          // Set signed upload URL for each file being processing
+          this.on('processing', (file) => {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type, false);
+            xhr.onreadystatechange = function(){
+              if(xhr.readyState === 4){
+                if(xhr.status === 200){
+                  var response = JSON.parse(xhr.responseText);
+                  file.postData = response.data;
+                  file.url = response.data.url;
+                  myDropzone.options.url = response.data.url
+                }
+                else{
+                  myDropzone.options.url = "";
+                  alert("Error uploading file.");
+                }
+              }
+            };
+            xhr.send();
+          })
+
+          this.on("sending", function(file, xhr, formData){
+            for(key in file.postData.fields){
+              formData.append(key, file.postData.fields[key]);
+            }
+          });
+      },
+      error: function (file, response){
+          if ($.type(response) === "string")
+              var message = response; //dropzone sends it's own error messages in string
+          else
+              var message = response.message;
+          file.previewElement.classList.add("dz-error");
+          _ref = file.previewElement.querySelectorAll("[data-dz-errormessage]");
+          _results = [];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              node = _ref[_i];
+              _results.push(node.textContent = message);
+          }
+          return _results;
+      },
+      successmultiple: function (file, response) {
+        console.log(file, response);
+        //$modal.modal("show");
+      },
+      success: function(file, response) {
+        console.log(file, response);
+      },
+      complete: function(file, response) {
+        $(".dz-progress").remove();
+        var nextID = $('.uploaded-file').length;
+        $("<input type='hidden'/>")
+           .attr("id", "files-" + nextID + "-url")
+           .attr("name", "files-" + nextID + "-url")
+           .attr("class", "uploaded-file")
+           .attr("value", file.url + file.postData.fields.key)
+           .appendTo("#submit-form");
+        console.log(file, response);
+      },
+      completemultiple: function (file, response) {
+        console.log(file, response, "completemultiple");
+      },
+      reset: function () {
+          console.log("resetFiles");
+          this.removeAllFiles(true);
+      }
+  });
+</script>

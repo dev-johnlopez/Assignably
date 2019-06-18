@@ -1,34 +1,55 @@
 <!-- ========== Left Sidebar Start ========== -->
-<div class="left side-menu">
-  <div class="sidebar-inner slimscrollleft">
-      <div id="sidebar-menu">
-          <ul>
-              <li class="menu-title">Main</li>
+<div class="left-side-menu">
+    <div class="slimscroll-menu">
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+            <ul class="metismenu" id="side-menu">
+                <li class="menu-title">Navigation</li>
 
-              <li>
-                  <a href="{{ url_for('deals.index') }}" class="waves-effect waves-primary"><i
-                          class="ti-home"></i><span> My Deals </span></a>
-              </li>
-
-              <li class="menu-title">Settings</li>
-
-              <li>
-                  <a href="{{ url_for('settings.notifications') }}" class="waves-effect waves-primary"><i
-                          class="ti-email"></i><span> Notifications </span></a>
-              </li>
-
-
-              {% if current_user.is_admin() %}
                 <li>
-                    <a href="{{ url_for('admin.index') }}" class="waves-effect waves-primary"><i
-                            class="ti-infinite"></i><span> Admin </span></a>
+                    <a href="javascript: void(0);" class="waves-effect">
+                        <i class="ti-home"></i>
+                        <span> My Deals </span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="{{ url_for('deals.index') }}">Active Deals</a>
+                        </li>
+                        <li>
+                          <a href="#">
+                            New Requests
+                            <span class="badge badge-pink pull-right">1</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="{{ url_for('deals.create') }}">New Deal</a>
+                        </li>
+                    </ul>
                 </li>
-              {% endif %}
-          </ul>
 
-          <div class="clearfix"></div>
-      </div>
-      <div class="clearfix"></div>
-  </div>
+                <li class="menu-title">Settings</li>
+
+                <li>
+                    <a href="{{ url_for('settings.notifications') }}" class="waves-effect waves-primary"><i
+                            class="ti-settings"></i><span> Settings </span></a>
+                </li>
+
+
+                {% if current_user.is_admin() %}
+                  <li>
+                      <a href="{{ url_for('admin.index') }}" class="waves-effect waves-primary"><i
+                              class="ti-infinite"></i><span> Admin </span></a>
+                  </li>
+                {% endif %}
+            </ul>
+
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Sidebar -left -->
+
 </div>
 <!-- Left Sidebar End -->

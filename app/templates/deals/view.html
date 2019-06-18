@@ -1,0 +1,172 @@
+{% extends 'common/backend_template.html' %}
+{% block page_css %}
+{{ dropzone.load_css() }}
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card-box">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h4>{{ deal}}</h4>
+                </div>
+                <div class="col-lg-4">
+                    <div class="text-lg-right mt-3 mt-lg-0">
+                        <button type="button" class="btn btn-success waves-effect waves-light mr-1"><i class="mdi mdi-settings"></i></button>
+                        <a href="#custom-modal" class="btn btn-danger waves-effect waves-light" data-animation="fadein" data-plugin="custommodal" data-overlayColor="#38414a"><i class="mdi mdi-plus-circle mr-1"></i> Add New</a>
+                    </div>
+                </div><!-- end col-->
+            </div> <!-- end row -->
+        </div> <!-- end card-box -->
+    </div><!-- end col-->
+  </div>
+  <!-- end row -->
+<div class="row">
+  <!-- Right Sidebar -->
+  <div class="col-9 align-items-stretch">
+    <div class="card-box">
+      <div class="row">
+        <div class="col-12">
+          <div id="carouselExampleCaptions" class="carousel slide w-100 p-3 overflow-hidden" data-ride="carousel">
+              <div class="carousel-inner">
+                {% for file in deal.files %}
+                  <div class="carousel-item {% if loop.first %}active{% endif %}">
+                      <img class="d-block img-fluid d-block w-100" style="height: 320px;" src="{{ file.url }}" alt="Slide {{ loop.index }}" />
+                  </div>
+                {% endfor %}
+                <div class="carousel-item">
+                  <div id="gmap" style="height: 320px;" class="gmaps"></div>
+                </div>
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+
+                  <span class="carousel-control-prev-icon black" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+              </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div> <!-- end col-12 -->
+  <!-- Todos app -->
+  <div class="col-3">
+    <div class="card-box">
+      <h4 class="mb-3 header-title">Todo</h4>
+      <div class="todoapp">
+        <div class="row align-items-center">
+            <div class="col-12">
+                <h5 id="todo-message"><span id="todo-remaining">2</span> of <span id="todo-total">5</span> remaining</h5>
+            </div>
+        </div>
+
+        <ul class="list-group list-group-flush slimscroll todo-list" style="max-height: 315px" id="todo-list">
+          <li class="list-group-item border-0 pl-1">
+            <div class="checkbox checkbox-primary">
+              <input class="todo-done" id="under-contract" type="checkbox" disabled checked>
+              <label for="under-contract">Upload Contract</label>
+            </div>
+          </li>
+          <li class="list-group-item border-0 pl-1">
+            <div class="checkbox checkbox-primary">
+              <input class="todo-done" id="calculate-arv" type="checkbox" disabled checked>
+              <label for="calculate-arv">Calculate ARV</label>
+            </div>
+          </li>
+          <li class="list-group-item border-0 pl-1">
+            <div class="checkbox checkbox-primary">
+              <input class="todo-done" id="estimate-rehab" type="checkbox" disabled checked>
+              <label for="estimate-rehab">Estimate Rehab</label>
+            </div>
+          </li>
+          <li class="list-group-item border-0 pl-1">
+            <div class="checkbox checkbox-primary">
+              <input class="todo-done" id="upload-photos" type="checkbox" disabled>
+              <label for="upload-photos">Upload Photos</label>
+            </div>
+          </li>
+          <li class="list-group-item border-0 pl-1">
+            <div class="checkbox checkbox-primary">
+              <input class="todo-done" id="send-to-buyers" type="checkbox" disabled>
+              <label for="send-to-buyers">Send To Buyers</label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div> <!-- end col -->
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card-box">
+            <div class="fileupload btn btn-success waves-effect waves-light mb-3">
+                <span><i class="mdi mdi-cloud-upload mr-1"></i> Upload Files</span>
+                <input type="file" class="upload">
+            </div>
+            <div class="table-responsive">
+                <table class="table table-centered">
+                    <thead class="font-13 bg-light text-muted">
+                        <tr>
+                            <th class="font-weight-medium">File Name</th>
+                            <th class="font-weight-medium">Date Modified</th>
+                            <th class="font-weight-medium">Size</th>
+                            <th class="font-weight-medium text-center" style="width: 125px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for file in deal.files %}
+                        <tr>
+                            <td>
+                                <img src="{{ file.url }}" height="30" alt="icon" class="mr-2">
+                                <a href="javascript:void(0);" class="text-dark">{{ file.name }}</a>
+                            </td>
+                            <td class="text-muted font-13">17-Jan-18 2:55 PM</td>
+                            <td>2.31 MB</td>
+                            <td>
+                                <a href="javascript:void(0);" class="btn btn-link font-18 text-muted btn-sm">
+                                    <i class="mdi mdi-close"></i>
+                                </a>
+                                <a href="javascript:void(0);" class="btn btn-link font-18 text-muted btn-sm">
+                                    <i class="mdi mdi-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div>
+<!-- end row -->
+{% endblock %}
+
+{% block page_javascript %}
+
+<script>
+  var map;
+  function initMap() {
+    map = new google.maps.Map(document.getElementById('gmap'), {
+      center: {lat: -34.397, lng: 150.644},
+      zoom: 8
+    });
+  }
+</script>
+
+<!-- google maps api -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVVPEv5S9oPONvjA9uQK1mgOMm9l89X2g&callback=initMap"
+  type="text/javascript"></script>
+
+<!-- gmap js-->
+<script src="{{ url_for('static', filename='backend/libs/gmaps/gmaps.min.js') }}"></script>
+
+<!-- Init js-->
+<script src="{{ url_for('static', filename='backend/js/pages/google-maps.init.js') }}"></script>
+
+
+
+{% endblock %}

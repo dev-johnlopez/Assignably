@@ -1,7 +1,7 @@
 {% with messages = get_flashed_messages(category_filter=["error"]) %}
 {% if messages %}
   {% for message in messages %}
-    <div class="row-fluid mt-3">
+    <div class="row-fluid">
       <div class="alert alert-danger alert-dismissable">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
           {{ message }}
@@ -14,7 +14,7 @@
 {% with messages = get_flashed_messages(category_filter=["info"]) %}
 {% if messages %}
   {% for message in messages %}
-    <div class="row-fluid mt-3">
+    <div class="row-fluid">
       <div class="alert alert-info alert-dismissable">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
           {{ message }}
@@ -27,7 +27,7 @@
 {% with messages = get_flashed_messages(category_filter=["warning"]) %}
 {% if messages %}
   {% for message in messages %}
-    <div class="row-fluid mt-3">
+    <div class="row-fluid">
       <div class="alert alert-warning alert-dismissable">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
           {{ message }}
@@ -40,7 +40,7 @@
 {% with messages = get_flashed_messages(category_filter=["success"]) %}
 {% if messages %}
   {% for message in messages %}
-    <div class="row-fluid mt-3">
+    <div class="row-fluid">
       <div class="alert alert-success alert-dismissable">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
           {{ message }}
@@ -54,7 +54,7 @@
 {% with tasks = current_user.get_tasks_in_progress() %}
 {% if tasks %}
     {% for task in tasks %}
-    <div class="row-fluid mt-3">
+    <div class="row-fluid">
       <div class="alert alert-success" role="alert">
           {{ task.description }}
           <span id="{{ task.id }}-progress">{{ task.get_progress() }}</span>%

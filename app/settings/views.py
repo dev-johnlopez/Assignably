@@ -16,5 +16,5 @@ def notifications():
         db.session.add(current_user.getSettings())
         db.session.commit()
     return render_template('settings/notifications.html',
-                           title='Notifications',
+                           title='Settings',
                            form=form)

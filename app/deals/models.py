@@ -63,8 +63,25 @@ class Address(db.Model):
             if location is not None:
                 self.latitude = location.latitude
                 self.longitude = location.longitude
-        except e:
+        except Error as e:
             current_app.logger.error('Unable to geocode address')
+
+
+class File(db.Model):
+    __tablename__ = 'file'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+    description = db.Column(db.String(1500))
+    file_type = db.Column(db.Integer)
+    url = db.Column(db.String(500))
+    deal_id = db.Column(db.Integer, db.ForeignKey('deal.id'))
+    deal = db.relationship("Deal", back_populates="files")
+
+    def __init__(self, **kwargs):
+        super(File, self).__init__(**kwargs)
+
+    def __repr__(self):
+        return '{}'.format(self.name)
 
 
 class Deal(db.Model):
@@ -83,17 +100,37 @@ class Deal(db.Model):
     purchase_price = db.Column(db.Integer)
     list_price = db.Column(db.Integer)
     under_contract_ind = db.Column(db.Boolean)
-    contacts = db.relationship("DealContact")
+    contacts = db.relationship("DealContact",
+                               cascade="all, delete-orphan")
+    proformas = db.relationship("Proforma",
+                                back_populates="deal",
+                                cascade="all, delete-orphan")
+    files = db.relationship("File",
+                            back_populates="deal",
+                            cascade="all, delete-orphan")
+
+    def __repr__(self):
+        return "{}".format(self.address.line_1)
 
     def add_contact(self, contact):
         if self.contacts is None:
             self.contacts = []
         self.contacts.append(contact)
 
+    def add_file(self, file):
+        if self.files is None:
+            self.files = []
+        self.files.append(file)
+
     def get_submitter(self):
-        return [deal_contact
-                for deal_contact in self.contacts
-                if deal_contact.is_submitter()][0]
+        contact_list = [deal_contact
+                        for deal_contact in self.contacts
+                        if deal_contact.is_submitter()]
+        if len(contact_list):
+            return [deal_contact
+                    for deal_contact in self.contacts
+                    if deal_contact.is_submitter()][0]
+        return None
 
     def to_dict(self):
         data = {
@@ -152,7 +189,8 @@ class DealContact(db.Model):
     deal = db.relationship("Deal", back_populates="contacts")
     contact_id = db.Column(db.Integer, db.ForeignKey('contact.id'))
     contact = db.relationship("Contact", back_populates="deal_contacts")
-    roles = db.relationship("DealContactRole")
+    roles = db.relationship("DealContactRole",
+                            cascade="all, delete-orphan")
 
     def add_role(self, role):
         if self.roles is None:

@@ -1,0 +1,29 @@
+{% extends 'common/backend_template.html' %}
+{% from "common/macros/_vertical_form.html" import render_field_with_errors, render_monetary_field_with_errors %}
+{% block page_css %}
+{{ dropzone.load_css() }}
+{% endblock %}
+{% block content %}
+
+<!-- Basic Form Wizard -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card-box">
+            {% include 'deals/forms/create.html' %}
+        </div>
+    </div>
+</div>
+
+<!-- End row -->
+
+
+{% endblock %}
+
+{% block page_javascript %}
+<!-- Dropzone js -->
+{{ dropzone.load_js() }}
+
+{% include 'deals/scripts/dropzone.html' %}
+
+
+{% endblock %}

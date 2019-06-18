@@ -24,6 +24,10 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
+    MAIL_DEBUG = os.environ.get('MAIL_DEBUG') or 0
     ADMINS = ['john@johnlopez.org']
     SECURITY_TRACKABLE = True
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
+    S3_KEY = os.environ.get('S3_KEY')
+    S3_SECRET_ACCESS_KEY = os.environ.get('S3_SECRET_ACCESS_KEY')
+    S3_BUCKET = os.environ.get('S3_BUCKET')

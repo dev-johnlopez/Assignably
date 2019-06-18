@@ -1,0 +1,79 @@
+{% macro render_field_with_errors(field) %}
+  <div class="form-group">
+    <label for="{{ field.id }}">{{ field.label }}
+    {% if field.description is not none and field.description != "" %}
+      <i class="fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="{{ field.description }}"></i>
+    {% endif %}
+    </label>
+    {% if field.type == 'RadioField' %}
+      {% for subfield in field %}
+      <div class="{% if field.inline is defined %}form-check form-check-inline{% else %}radio radio-primary{% endif %}">
+        {{ subfield }}
+        {{ subfield.label }}
+      </div>
+      {% endfor %}
+    {% else %}
+      {{ field(**kwargs)|safe }}
+    {% endif %}
+    {% if field.errors %}
+      {% for error in field.errors %}
+      <div class="invalid-feedback d-block">
+        {{ error }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro render_static(field) %}
+  <div class="form-group">
+    <label for="{{ field.id }}">{{ field.label }}
+    {% if field.description is not none and field.description != "" %}
+      <i class="fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="{{ field.description }}"></i>
+    {% endif %}
+    </label>
+    {{ field(readonly="1", **kwargs)|safe }}
+  </div>
+{% endmacro %}
+
+{% macro render_monetary_field_with_errors(field) %}
+<div class="form-group">
+  <label for="{{ field.id }}">{{ field.label }}
+  {% if field.description is not none and field.description != "" %}
+    <i class="fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="{{ field.description }}"></i>
+  {% endif %}
+  </label>
+  <div class="input-group">
+      <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+      {{ field(**kwargs)|safe }}
+  </div>
+  {% if field.errors %}
+    {% for error in field.errors %}
+    <div class="invalid-feedback d-block">
+      {{ error }}
+    </div>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endmacro %}
+
+{% macro render_percent_field_with_errors(field) %}
+<div class="form-group">
+  <label for="{{ field.id }}">{{ field.label }}
+  {% if field.description is not none and field.description != "" %}
+    <i class="fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="{{ field.description }}"></i>
+  {% endif %}
+  </label>
+  <div class="input-group">
+      {{ field(**kwargs)|safe }}
+      <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+  </div>
+  {% if field.errors %}
+    {% for error in field.errors %}
+    <div class="invalid-feedback d-block">
+      {{ error }}
+    </div>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endmacro %}

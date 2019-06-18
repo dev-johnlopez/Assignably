@@ -5,6 +5,7 @@ from flask import Flask, request, redirect
 from config import Config
 from werkzeug.contrib.fixers import ProxyFix
 from flask_admin import Admin
+from flask_dropzone import Dropzone
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
@@ -21,6 +22,7 @@ security = Security()
 admin = Admin()
 cors = CORS()
 mail = Mail()
+dropzone = Dropzone()
 geolocator = Nominatim(user_agent='Assignably')
 
 
@@ -35,17 +37,21 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     mail.init_app(app)
     cors.init_app(app)
+    dropzone.init_app(app)
 
     from app.api import bp as api_bp
     from app.deals.views import bp as deals_bp
     from app.settings.views import bp as settings_bp
+    from app.calculator.views import bp as calculator_bp
     app.register_blueprint(api_bp, url_prefix='/api')
     app.register_blueprint(settings_bp, url_prefix='/settings')
+    app.register_blueprint(calculator_bp, url_prefix='/calc')
     app.register_blueprint(deals_bp)
 
     from app.auth.models import User, Role
     from app.deals.models import Address, Deal, DealContact, DealContactRole, \
         Contact
+    from app.calculator.models import Proforma, LineItem
 
     user_datastore = SQLAlchemyUserDatastore(db, User, Role)
     security.init_app(app=app, datastore=user_datastore)
