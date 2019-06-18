@@ -41,7 +41,7 @@ def create():
         for file in form.files:
             print("******* ADDING FORM")
             file = File(url=file.url,
-                        file_type=file.file_type)
+                        file_type=0)
             deal.add_file(file)
         form.populate_obj(deal)
         db.session.add(deal)
