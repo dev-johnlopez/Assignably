@@ -50,7 +50,7 @@ def create_app(config_class=Config):
 
     from app.auth.models import User, Role
     from app.deals.models import Address, Deal, DealContact, DealContactRole, \
-        Contact
+        Contact, File
     from app.calculator.models import Proforma, LineItem
 
     user_datastore = SQLAlchemyUserDatastore(db, User, Role)
