@@ -21,5 +21,14 @@ This deal has been marketed at: {{ deal.list_price }}</p>
 <p>It is now known if this deal is under contract.<p>
 {% endif %}
 
+{% if deal.files|length > 0 %}
+  <p>{{ submitted_by }} has uploaded the following files for your review:</p>
+  {% for file in deal.files %}
+    <p>{{ file.url }}</p>
+  {% endfor %}
+{% else %}
+  <p>{{ submitted_by }} did not upload any files.</p>
+{% endif %}
+
 <p>Sincerely,<br />
 The Assignably Team</p>
