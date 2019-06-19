@@ -31,14 +31,7 @@
   {{ render_field_with_errors(form.bathrooms, class="form-control", required=True) }}
   {{ render_monetary_field_with_errors(form.after_repair_value, class="form-control", required=True) }}
   {{ render_monetary_field_with_errors(form.rehab_estimate, class="form-control", required=True) }}
-  <div class="form-group">
-      <label for="under_contract_ind">Under Contract?</label>
-      <select class="form-control" id="under_contract_ind" required>
-        <option value="" selected></option>
-        <option value="1">Yes</option>
-        <option value="0">No</option>
-      </select>
-  </div>
+  {{ render_field_with_errors(form.under_contract_ind, class="form-control", required=True) }}
   {{ render_monetary_field_with_errors(form.purchase_price, class="form-control", required=True) }}
   {{ render_monetary_field_with_errors(form.list_price, class="form-control", required=True) }}
   <br />

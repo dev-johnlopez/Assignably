@@ -111,3 +111,9 @@ class DealForm(FlaskForm):
     purchase_price = IntegerField('Purchase Price', validators=[Optional()])
     list_price = IntegerField('List Price', validators=[Optional()])
     property_tax = IntegerField('Property Tax', validators=[Optional()])
+    under_contract_ind = SelectField('Under Contract?',
+                                     choices=[
+                                            ('', ''),
+                                            ('1', 'Yes'),
+                                            ('0', 'No')],
+                                     validators=[DataRequired()])
