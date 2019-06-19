@@ -114,6 +114,7 @@ class DealForm(FlaskForm):
     under_contract_ind = SelectField('Under Contract?',
                                      choices=[
                                             ('', ''),
-                                            ('1', 'Yes'),
-                                            ('0', 'No')],
-                                     validators=[DataRequired()])
+                                            (True, 'Yes'),
+                                            (False, 'No')],
+                                     validators=[DataRequired()],
+                                     coerce=lambda x: x == 'True')
