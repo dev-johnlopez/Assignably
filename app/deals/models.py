@@ -199,7 +199,7 @@ class DealContact(db.Model):
 
     def is_submitter(self):
         return len([role
-                    for role in self.roles if role.name == "Submitted By"])
+                    for role in self.roles if role.name == "Created By"])
 
     def __repr__(self):
         return str(self.contact)
