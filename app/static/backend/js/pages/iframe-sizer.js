@@ -14,8 +14,6 @@ function handleDocHeightMsg(e) {
     if ( e.origin === 'http://www.assignably.com' ) {
       // parse data
       var data = JSON.parse( e.data );
-      alert(data);
-      alert(JSON.stringify(data));
       // check data object
       if ( data['docHeight'] ) {
         setIframeHeightCO( 'submit-frame', data['docHeight'] );
@@ -27,9 +25,7 @@ function handleDocHeightMsg(e) {
 
 // assign message handler
 if ( window.addEventListener ) {
-  alert("1");
-    window.addEventListener('message', handleDocHeightMsg, false);
-    alert("2");
+  window.addEventListener('message', handleDocHeightMsg, false);
 } else if ( window.attachEvent ) { // ie8
-    window.attachEvent('onmessage', handleDocHeightMsg);
+  window.attachEvent('onmessage', handleDocHeightMsg);
 }
