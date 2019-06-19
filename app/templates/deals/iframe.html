@@ -24,6 +24,7 @@ function sendHeight()
         // replace #wrapper with element that contains
         // actual page content
         var height= document.getElementById('wrapper').offsetHeight;
+        alert(height);
         parent.postMessage(height, '*');
     }
 }
@@ -40,6 +41,5 @@ eventer(messageEvent, function(e) {
 
     sendHeight();
 
-},
-false);
+}, false);
 </script>
