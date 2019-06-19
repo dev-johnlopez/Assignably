@@ -1,5 +1,6 @@
 from flask import current_app, url_for, g
 from app import db, geolocator
+from app.email import send_email
 from sqlalchemy import event
 
 
