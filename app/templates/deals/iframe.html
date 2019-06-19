@@ -9,7 +9,7 @@
    body { background: transparent !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
 </style>
 
-<div style="background-color: transparent;">
+<div id="wrapper" style="background-color: transparent;">
 {% include 'deals/forms/create.html' %}
 </div>
 <script src="{{ url_for('static', filename='backend/js/vendor.min.js') }}"></script>
