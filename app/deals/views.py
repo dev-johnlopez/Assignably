@@ -63,12 +63,14 @@ def iframe(user_id):
     if form.validate_on_submit():
         user = User.query.get_or_404(user_id)
         deal = Deal()
+        submitted_by = None
         for contact_form in form.contacts:
             deal_contact = DealContact()
             contact = Contact(first_name=contact_form.contact.first_name.data,
                               last_name=contact_form.contact.last_name.data,
                               phone=contact_form.contact.phone.data,
                               email=contact_form.contact.email.data)
+            submitted_by = contact
             deal_contact.contact = contact
             role = DealContactRole(name="Created By")
             deal_contact.add_role(role)
@@ -95,10 +97,10 @@ def iframe(user_id):
                    sender='support@assignably.com', recipients=[recipient],
                    text_body=render_template('emails/new_deal.txt',
                                              user=user,
-                                             deal=deal),
+                                             submitted_by=submitted_by),
                    html_body=render_template('emails/new_deal.html',
                                              user=user,
-                                             deal=deal),
+                                             submitted_by=submitted_by),
                    attachments=[],
                    sync=True)
         return render_template('deals/submitted.html',

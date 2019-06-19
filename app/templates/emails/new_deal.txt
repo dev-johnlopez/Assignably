@@ -2,9 +2,9 @@ Hello!,
 
 A new deal has been submitted to you!
 
-Submitted By: {{ deal.get_submitter().contact }}
-Contact Phone: {{ deal.get_submitter().contact.phone }}
-Contact Email: {{ deal.get_submitter().contact.email }}
+Submitted By: {{ submitted_by }}
+Contact Phone: {{ submitted_by.phone }}
+Contact Email: {{ submitted_by.email }}
 
 {{ deal.address }}
 Bedrooms: {{ deal.bedrooms_str }}

@@ -2,9 +2,9 @@
 
 <p>A new deal has been submitted to you!</p>
 
-<p>Submitted By: {{ deal.get_submitter().contact }}<br />
-Contact Phone: {{ deal.get_submitter().contact.phone }}<br />
-Contact Email: {{ deal.get_submitter().contact.email }}</p>
+<p>Submitted By: {{ submitted_by }}<br />
+Contact Phone: {{ submitted_by.phone }}<br />
+Contact Email: {{ submitted_by.email }}</p>
 
 <p><strong>{{ deal.address }}</strong><br />
 Bedrooms: {{ deal.bedrooms_str }}<br />
