@@ -19,6 +19,7 @@
 <script type="text/javascript">
 function sendHeight()
 {
+    alert('huh?');
     if(parent.postMessage)
     {
         // replace #wrapper with element that contains
@@ -36,9 +37,9 @@ var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 
 // Listen for a message from the iframe.
 eventer(messageEvent, function(e) {
-
+    alert("wowj");
     if (isNaN(e.data)) return;
-
+    alert("sending");
     sendHeight();
 
 }, false);
