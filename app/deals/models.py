@@ -181,6 +181,18 @@ class Deal(db.Model):
         deal_contact.contact = g.current_user.contact
         self.add_contact(deal_contact)
 
+    def send_new_deal_notification_email(self, recipients):
+        send_email('New Deal Notification!',
+                   sender='support@assignably.com', recipients=recipients,
+                   text_body=render_template('emails/new_deal.txt',
+                                             user=g.current_user,
+                                             deal=deal),
+                   html_body=render_template('emails/new_deal.html',
+                                             user=g.current_user,
+                                             deal=deal),
+                   attachments=[],
+                   sync=True)
+
 
 class DealContact(db.Model):
     __tablename__ = "deal_contact"

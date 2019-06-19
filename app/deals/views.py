@@ -87,6 +87,10 @@ def iframe(user_id):
         deal.add_contact(deal_contact)
         db.session.add(deal)
         db.session.commit()
+        recipient = user.email
+        if user.getSettings().partnership_email_recipient is not None:
+            recipient = user.getSettings().partnership_email_recipient
+        deal.send_new_deal_notification_email([recipient])
         return render_template('deals/submitted.html',
                                user_id=user_id)
 

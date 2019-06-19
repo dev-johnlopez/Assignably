@@ -24,7 +24,6 @@ def get_deals():
 @token_auth.login_required
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 def create_deal():
-    print("CREATING DEAL!!")
     data = request.get_json() or {}
     if 'address' not in data \
         or 'sq_feet' not in data \
