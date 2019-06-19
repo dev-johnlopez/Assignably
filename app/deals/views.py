@@ -2,6 +2,7 @@ from flask import Blueprint, g, render_template, redirect, url_for, g, flash, \
     request
 from flask_security import current_user, login_required, current_user
 from app import db
+from app.email import send_email
 from app.deals.forms import DealForm
 from app.auth.models import User
 from app.deals.models import Deal, DealContact, DealContactRole, Contact, File
