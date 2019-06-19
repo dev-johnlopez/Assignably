@@ -94,10 +94,10 @@ def iframe(user_id):
         send_email('New Deal Notification!',
                    sender='support@assignably.com', recipients=[recipient],
                    text_body=render_template('emails/new_deal.txt',
-                                             user=g.current_user,
+                                             user=user,
                                              deal=deal),
                    html_body=render_template('emails/new_deal.html',
-                                             user=g.current_user,
+                                             user=user,
                                              deal=deal),
                    attachments=[],
                    sync=True)
