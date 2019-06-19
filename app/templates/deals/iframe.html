@@ -8,39 +8,34 @@
 <style type="text/css">
    body { background: transparent !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
 </style>
-
-<div id="wrapper" style="background-color: transparent;">
+<body style="background-color: transparent;">
 {% include 'deals/forms/create.html' %}
-</div>
+</body>
 <script src="{{ url_for('static', filename='backend/js/vendor.min.js') }}"></script>
 {% include 'deals/scripts/dropzone.html' %}
 
 <script scrc="{{ url_for('static', filename='backend/js/app.min.js') }}"></script>
 <script type="text/javascript">
-function sendHeight()
-{
-    alert('huh?');
-    if(parent.postMessage)
-    {
-        // replace #wrapper with element that contains
-        // actual page content
-        var height= document.getElementById('wrapper').offsetHeight;
-        alert(height);
-        parent.postMessage(height, '*');
-    }
-}
+  // Get height of document
+  function getDocHeight(doc) {
+      doc = doc || document;
+      // from http://stackoverflow.com/questions/1145850/get-height-of-entire-document-with-javascript
+      var body = doc.body, html = doc.documentElement;
+      var height = Math.max( body.scrollHeight, body.offsetHeight,
+          html.clientHeight, html.scrollHeight, html.offsetHeight );
+      return height;
+  }
 
-// Create browser compatible event handler.
-var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-var eventer = window[eventMethod];
-var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+  // send docHeight onload
+  function sendDocHeightMsg(e) {
+      var ht = getDocHeight();
+      parent.postMessage( JSON.stringify( {'docHeight': ht} ), '*' );
+  }
 
-// Listen for a message from the iframe.
-eventer(messageEvent, function(e) {
-    alert("wowj");
-    if (isNaN(e.data)) return;
-    alert("sending");
-    sendHeight();
-
-}, false);
+  // assign onload handler
+  if ( window.addEventListener ) {
+      window.addEventListener('load', sendDocHeightMsg, false);
+  } else if ( window.attachEvent ) { // ie8
+      window.attachEvent('onload', sendDocHeightMsg);
+  }
 </script>
