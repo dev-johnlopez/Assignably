@@ -4,14 +4,14 @@ from flask_admin.model import BaseModelView
 from flask_admin.contrib import sqla
 from flask_admin.contrib.sqla import ModelView
 from flask_security import current_user
-from app.auth.models import User
+from app.auth.models import User, Company
 from app.deals.models import Deal
 
 
 def create_admin(app, db):
     admin = Admin(app, name='Assignably', index_view=MyAdminIndexView(),
                   template_mode='bootstrap3')
-    # admin.add_view(MyModelView(Account, db.session))
+    admin.add_view(MyModelView(Company, db.session))
     admin.add_view(MyModelView(User, db.session))
     admin.add_view(MyModelView(Deal, db.session))
     # admin.add_view(MyModelView(Role, db.session))

@@ -31,3 +31,9 @@ class Config(object):
     S3_KEY = os.environ.get('S3_KEY')
     S3_SECRET_ACCESS_KEY = os.environ.get('S3_SECRET_ACCESS_KEY')
     S3_BUCKET = os.environ.get('S3_BUCKET')
+
+
+class TestConfig(Config):
+    TESTING = True
+    WTF_CSRF_ENABLED = False
+    WTF_CSRF_METHODS = []

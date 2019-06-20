@@ -16,6 +16,12 @@ roles_users = db.Table('roles_users',
                                  db.ForeignKey('role.id')))
 
 
+class Company(db.Model):
+    __tablename__ = 'company'
+    id = db.Column(db.Integer, primary_key=True)
+    users = db.relationship("User", back_populates="company")
+
+
 class User(db.Model, UserMixin):
 
     __tablename__ = 'user'
@@ -37,6 +43,8 @@ class User(db.Model, UserMixin):
     last_login_ip = db.Column(db.String(40))
     current_login_ip = db.Column(db.String(40))
     login_count = db.Column(db.Integer)
+    company_id = db.Column(db.Integer, db.ForeignKey('company.id'))
+    company = db.relationship("Company", back_populates="users")
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
     contact = db.relationship("Contact", uselist=False, back_populates="user")
