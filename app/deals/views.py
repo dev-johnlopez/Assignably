@@ -32,7 +32,6 @@ def create():
     form = DealForm()
     if form.validate_on_submit():
         deal = Deal()
-        print(form.data)
         for contact_form in form.contacts:
             deal_contact = DealContact()
             deal_contact.contact = current_user.contact
@@ -40,7 +39,6 @@ def create():
             deal_contact.add_role(role)
             deal.add_contact(deal_contact)
         for file in form.files:
-            print("******* ADDING FORM")
             file = File(url=file.url)
             deal.add_file(file)
         form.populate_obj(deal)
@@ -91,8 +89,8 @@ def iframe(user_id):
         db.session.add(deal)
         db.session.commit()
         recipient = user.email
-        if user.getSettings().partnership_email_recipient is not None:
-            recipient = user.getSettings().partnership_email_recipient
+        if user.get_settings().partnership_email_recipient is not None:
+            recipient = user.get_settings().partnership_email_recipient
         send_email('New Deal Notification!',
                    sender='support@assignably.com', recipients=[recipient],
                    text_body=render_template('emails/new_deal.txt',

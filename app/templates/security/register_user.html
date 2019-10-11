@@ -1,46 +1,95 @@
 {% extends "security/layouts/template.html" %}
 
 {% from "security/_macros.html" import render_field_with_errors, render_field %}
-{% include "security/_messages.html" %}
+
 
 {% block form %}
 <div class="card">
     <div class="card-body p-4">
         <div class="text-center w-75 m-auto">
-            <a href="index.html">
-                <span><img src="{{ url_for('static', filename='backend/images/logo-dark.png') }}" alt="" height="22"></span>
-            </a>
-            <p class="text-muted mb-4 mt-3">Don't have an account? Create your own account, it takes less than a minute</p>
+          <h2>
+                <span class="logo-sm-text-light">Assignably</span>
+          </h2>
+          <p class="text-muted mb-4 mt-3">Don't have an account? Create your own account, it takes less than a minute</p>
         </div>
 
         <form action="{{ url_for_security('register') }}" method="POST" name="register_user_form">
             {{ register_user_form.hidden_tag() }}
-            {#<div class="form-group">
+            {{ register_user_form.company.hidden_tag() }}
+            {{ register_user_form.contact.hidden_tag() }}
+
+           <div class="form-group">
+                <label for="fullname">Company Name</label>
+                {{ render_field(register_user_form.company.company_name,id="inputCompany", class="form-control", placeholder="Company Name", required="true") }}
+            </div>
+            <div class="form-group">
                 <label for="fullname">First Name</label>
-                <input class="form-control" type="text" id="firstname" placeholder="Enter first name" required>
+                {{ render_field(register_user_form.contact.first_name,id="inputFirstName", class="form-control", placeholder="First Name", required="true") }}
+                {% if register_user_form.contact.first_name.errors %}
+                  {% for error in register_user_form.contact.first_name.errors %}
+                  <div class="invalid-feedback d-block">
+                    {{ error }}
+                  </div>
+                  {% endfor %}
+                {% endif %}
             </div>
 
             <div class="form-group">
                 <label for="fullname">Last Name</label>
-                <input class="form-control" type="text" id="lastname" placeholder="Enter last name" required>
+                {{ render_field(register_user_form.contact.last_name,id="inputLastName", class="form-control", placeholder="Last Name", required="true") }}
+                {% if register_user_form.contact.last_name.errors %}
+                  {% for error in register_user_form.contact.last_name.errors %}
+                  <div class="invalid-feedback d-block">
+                    {{ error }}
+                  </div>
+                  {% endfor %}
+                {% endif %}
             </div>
 
             <div class="form-group">
                 <label for="fullname">Phone Number</label>
-                <input class="form-control" type="text" id="phone" placeholder="Enter phone number" required>
-            </div>#}
+                {{ render_field(register_user_form.contact.phone,id="inputPhone", class="form-control", placeholder="Phone #", required="true") }}
+                {% if register_user_form.contact.phone.errors %}
+                  {% for error in register_user_form.contact.phone.errors %}
+                  <div class="invalid-feedback d-block">
+                    {{ error }}
+                  </div>
+                  {% endfor %}
+                {% endif %}
+            </div>
 
             <div class="form-group">
                 <label for="emailaddress">Email address</label>
-                {{ render_field(register_user_form.email,id="inputEmail", class="form-control", placeholder="Email", autofocus="true", required="true") }}
+                {{ render_field(register_user_form.email,id="inputEmail", class="form-control", placeholder="Email", required="true") }}
+                {% if register_user_form.email.errors %}
+                  {% for error in register_user_form.email.errors %}
+                  <div class="invalid-feedback d-block">
+                    {{ error }}
+                  </div>
+                  {% endfor %}
+                {% endif %}
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
                 {{ render_field(register_user_form.password,id="inputPassword", class="form-control", placeholder="Password", required="true") }}
+                {% if register_user_form.password.errors %}
+                  {% for error in register_user_form.password.errors %}
+                  <div class="invalid-feedback d-block">
+                    {{ error }}
+                  </div>
+                  {% endfor %}
+                {% endif %}
             </div>
             <div class="form-group">
                 <label for="password">Confirm Password</label>
                 {{ render_field(register_user_form.password_confirm,id="confirmPassword", class="form-control", placeholder="Confirm Password", required="true") }}
+                {% if register_user_form.password_confirm.errors %}
+                  {% for error in register_user_form.password_confirm.errors %}
+                  <div class="invalid-feedback d-block">
+                    {{ error }}
+                  </div>
+                  {% endfor %}
+                {% endif %}
             </div>
             <div class="form-group">
                 <div class="custom-control custom-checkbox">

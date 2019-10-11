@@ -1,7 +1,7 @@
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, url_for
 from config import Config
 from werkzeug.contrib.fixers import ProxyFix
 from flask_admin import Admin
@@ -13,6 +13,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from elasticsearch import Elasticsearch
 from geopy.geocoders import Nominatim
+from app.auth.forms import ExtendedRegisterForm
 
 
 app = Flask(__name__)
@@ -40,21 +41,29 @@ def create_app(config_class=Config):
     dropzone.init_app(app)
 
     from app.api import bp as api_bp
+    from app.auth.views import bp as auth_bp
     from app.deals.views import bp as deals_bp
     from app.settings.views import bp as settings_bp
     from app.calculator.views import bp as calculator_bp
+    from app.landing.views import bp as landing_bp
+    from app.errors import bp as errors_bp
+    app.register_blueprint(errors_bp)
     app.register_blueprint(api_bp, url_prefix='/api')
     app.register_blueprint(settings_bp, url_prefix='/settings')
     app.register_blueprint(calculator_bp, url_prefix='/calc')
-    app.register_blueprint(deals_bp)
+    app.register_blueprint(deals_bp, url_prefix='/deals')
+    app.register_blueprint(auth_bp, url_prefix='/u')
+    #app.register_blueprint(landing_bp)
 
-    from app.auth.models import User, Role
+    from app.auth.models import User, Role, Company
     from app.deals.models import Address, Deal, DealContact, DealContactRole, \
         Contact, File
     from app.calculator.models import Proforma, LineItem
 
     user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-    security.init_app(app=app, datastore=user_datastore)
+    security.init_app(app=app,
+                      datastore=user_datastore,
+                      register_form=ExtendedRegisterForm)
 
     from app.admin import create_admin
     admin = create_admin(app, db)
@@ -79,3 +88,7 @@ def create_app(config_class=Config):
         app.logger.info('Assignably startup')
 
     return app
+
+@app.route('/')
+def index():
+    return redirect(url_for('deals.index'))

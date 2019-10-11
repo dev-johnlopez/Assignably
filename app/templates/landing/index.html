@@ -1,0 +1,683 @@
+{% extends 'common/landing_template.html' %}
+{% block content %}
+<!-- home start -->
+<section class="bg-home bg-primary" id="home">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="row">
+                  <div class="home-content text-center mb-4">
+                      <h1 class="home-title mb-4 text-white">Minton is a fully featured premium admin template</h1>
+                      <p class="text-white-50 home-desc mb-4">Minton is a fully featured premium admin template built on top of awesome Bootstrap 4.3.1, modern web technology HTML5, CSS3 and jQuery.</p>
+                      <div>
+                          <a href="#" class="btn btn-light mr-1">Contact us</a>
+                          <a href="#" class="btn btn-purple">Our Works</a>
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                      <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="input-group row mb-3">
+
+                           <input id="autocomplete"
+                               placeholder="Enter your address"
+                               onFocus="geolocate()"
+                               type="text"
+                               class="form-control"/>
+                           <div class="input-group-append">
+                             <button class="btn btn-success" type="submit">Get my free offer</button>
+                           </div>
+                           <table id="address">
+                             <tr>
+                               <td class="label">Street address</td>
+                               <td class="slimField">{{ form.street_number() }}</td>
+                               <td class="wideField" colspan="2">{{ form.route() }}</td>
+                             </tr>
+                             <tr>
+                               <td class="label">City</td>
+                               <td class="wideField" colspan="3">{{ form.locality() }}</td>
+                             </tr>
+                             <tr>
+                               <td class="label">State</td>
+                               <td class="slimField">{{ form.administrative_area_level_1() }}</td>
+                               <td class="label">Zip code</td>
+                               <td class="wideField">{{ form.postal_code() }}</td>
+                             </tr>
+                             <tr>
+                               <td class="label">Country</td>
+                               <td class="wideField" colspan="3">{{ form.country() }}</td>
+                             </tr>
+                           </table>
+                          </div>
+                        </form>
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="home-img">
+                    <img src="{{ url_for('static', filename='landing/images/home-img.png') }}" alt="" class="img-fluid mx-auto d-block">
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container-fluid -->
+</section>
+<!-- home end -->
+
+<!-- services start -->
+<section class="section" id="services">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="title text-center my-4">
+                    <h3 class="mb-3">The theme is fully responsive and easy to customize</h3>
+                    <p class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem aperiam eaque ipsa quae</p>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        <div class="row">
+            <div class="col-lg-4 col-sm-6">
+                <div class="services-box text-center mt-3 p-3">
+                    <div class="services-icon mb-3">
+                        <i class="pe-7s-display1 h2 mt-0"></i>
+                    </div>
+                    <h4>Bootstrap UI based</h4>
+                    <p class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem doloremque.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="services-box text-center mt-3 p-3">
+                    <div class="services-icon mb-3">
+                        <i class="pe-7s-science h2 mt-0"></i>
+                    </div>
+                    <h4>Creative Design</h4>
+                    <p class="text-muted">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="services-box text-center mt-3 p-3">
+                    <div class="services-icon mb-3">
+                        <i class="pe-7s-phone h2 mt-0"></i>
+                    </div>
+                    <h4>Responsive Layouts</h4>
+                    <p class="text-muted">Itaque earum rerum hic tenetur a sapiente delectus ut aut reiciendis maiores alias.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-sm-6">
+                <div class="services-box text-center mt-3 p-3">
+                    <div class="services-icon mb-3">
+                        <i class="pe-7s-exapnd2 h2 mt-0"></i>
+                    </div>
+                    <h4>Strategy Solutions</h4>
+                    <p class="text-muted">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="services-box text-center mt-3 p-3">
+                    <div class="services-icon mb-3">
+                        <i class="pe-7s-headphones h2 mt-0"></i>
+                    </div>
+                    <h4>Awesome Support</h4>
+                    <p class="text-muted">Et harum quidem rerum facilis est et expedita distinctio nam soluta nobis est.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="services-box text-center mt-3 p-3">
+                    <div class="services-icon mb-3">
+                        <i class="pe-7s-upload h2 mt-0"></i>
+                    </div>
+                    <h4>Easy to customize</h4>
+                    <p class="text-muted">Ut enim ad minima veniam, quis nostrum ullam corporis suscipit.</p>
+                </div>
+            </div>
+
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container-fluid -->
+</section>
+<!-- services end -->
+
+
+<!-- features start -->
+<section class="section bg-light" id="features">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="title text-center mb-5">
+                    <i class="pe-7s-helm h1 text-primary mb-3"></i>
+                    <h3 class="font-22 mb-3">Key features of the product</h3>
+                    <p class="text-muted">If several languages coalesce the grammar of the resulting language</p>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-5 col-sm-6">
+                <div>
+                    <img src="{{ url_for('static', filename='landing/images/features/img-1.png') }}" alt="" class="img-fluid mx-auto d-block">
+                </div>
+            </div>
+            <div class="col-lg-5 offset-lg-1">
+                <div class="mb-4">
+                    <div class="feature-icon float-left">
+                        <i class="pe-7s-notebook text-primary font-24 mr-3"></i>
+                    </div>
+                    <h4 class="mb-3">Quality Code</h4>
+                    <p class="text-muted">It will be as simple as Occidental in fact, it will be Occidental. To an English person it will seem like simplified English.</p>
+
+                </div>
+                <div class="mb-4">
+                    <div class="feature-icon float-left">
+                        <i class="pe-7s-edit text-primary font-24 mr-3"></i>
+                    </div>
+                    <h4 class="mb-3">Easy to customize</h4>
+                    <p class="text-muted">If several languages coalesce, the grammar of the resulting language is more simple and regular than of the individual languages.</p>
+
+                </div>
+                <div>
+                    <div class="feature-icon float-left">
+                        <i class="pe-7s-headphones text-primary font-24 mr-3"></i>
+                    </div>
+                    <h4 class="mb-3">Awesome Support</h4>
+                    <p class="text-muted">New common language will be more simple and regular than the existing European languages occidental.</p>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- end row -->
+
+        <div class="row align-items-center justify-content-center mt-5 pt-4">
+
+            <div class="col-lg-5 ">
+                <div class="mb-4">
+                    <div class="feature-icon float-left">
+                        <i class="pe-7s-exapnd2 text-primary  font-24 mr-3"></i>
+                    </div>
+                    <h4 class="mb-3">Strategy Solutions</h4>
+                    <p class="text-muted">It will be as simple as Occidental in fact, it will be Occidental. To an English person it will seem like simplified English.</p>
+
+                </div>
+                <div class="mb-4">
+                    <div class="feature-icon float-left">
+                        <i class="pe-7s-headphones text-primary  font-24 mr-3"></i>
+                    </div>
+                    <h5 class="mb-3 font-18">Awesome Support</h5>
+                    <p class="text-muted">New common language will be more simple and regular than the existing European languages occidental.</p>
+
+                </div>
+                <div>
+                    <div class="feature-icon float-left">
+                        <i class="pe-7s-edit text-primary  font-24 mr-3"></i>
+                    </div>
+                    <h5 class="mb-3 font-18">Easy to customize</h5>
+                    <p class="text-muted">If several languages coalesce, the grammar of the resulting language is more simple and regular than of the individual languages.</p>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-5 col-sm-6 offset-lg-1">
+                <div>
+                    <img src="{{ url_for('static', filename='landing/images/features/img-2.png') }}" alt="" class="img-fluid mx-auto d-block">
+                </div>
+            </div>
+
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container-fluid -->
+</section>
+<!-- features end -->
+
+<!-- counter start -->
+<section class="py-5 bg-primary">
+    <div class="container-fluid">
+        <div class="row" id="counter">
+            <div class="col-lg-3 col-sm-6">
+                <div class="counter-box text-center my-2 p-3">
+                    <div class="counter-icon text-white-50">
+                        <i class="pe-7s-add-user display-4"></i>
+                    </div>
+                    <div class="counter-content">
+                        <h2 class="counter-value text-white mt-0 mb-3" data-count="1200">0</h2>
+                        <p class="text-white-50 mb-0">Fans</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6">
+                <div class="counter-box text-center my-2 p-3">
+                    <div class="counter-icon text-white-50">
+                        <i class="pe-7s-cart display-4"></i>
+                    </div>
+                    <div class="counter-content">
+                        <h2 class="counter-value text-white mt-0 mb-3" data-count="4900">10</h2>
+                        <p class="text-white-50 mb-0">Total Sales</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="counter-box text-center my-2 p-3">
+                    <div class="counter-icon text-white-50">
+                        <i class="pe-7s-smile display-4"></i>
+                    </div>
+                    <div class="counter-content">
+                        <h2 class="counter-value text-white mt-0 mb-3" data-count="5645">608</h2>
+                        <p class="text-white-50 mb-0">Happy Clients</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="counter-box text-center my-2 p-3">
+                    <div class="counter-icon text-white-50">
+                        <i class="pe-7s-medal display-4"></i>
+                    </div>
+                    <div class="counter-content">
+                        <h2 class="counter-value text-white mt-0 mb-3" data-count="800">2</h2>
+                        <p class="text-white-50 mb-0">Won Prices</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- counter end -->
+
+<!-- pricing start -->
+<section class="section" id="pricing">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="title text-center mb-4">
+                    <i class="pe-7s-notebook h1 text-primary mb-3"></i>
+                    <h3 class="font-22 mb-3">Our Pricing plans</h3>
+                    <p class="text-muted">If several languages coalesce the grammar of the resulting language</p>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="pricing-plan mt-3 p-3">
+                    <div class="plan-header px-3 mt-3">
+                        <div class="pricing-icon float-right">
+                            <i class="pe-7s-helm h1 mt-0 text-primary"></i>
+                        </div>
+                        <h5 class="plan-title font-18">Single Application</h5>
+                        <p class="text-muted">Sed ut perspiciatis unde</p>
+                        <h2 class="pt-4"><sup><span class="font-18">$</span></sup> <span class="text-primary">24</span> <span class="font-18">Per License</span></h2>
+                    </div>
+                    <hr class="my-4">
+                    <div class="plan-content text-muted mb-4 px-3">
+                        <p><i class="mdi mdi-check text-primary mr-2"></i> 5 Projects</p>
+                        <p><i class="mdi mdi-check text-primary mr-2"></i> 1 GB Storage</p>
+                        <p><i class="mdi mdi-check text-primary mr-2"></i> No Domain</p>
+                        <p><i class="mdi mdi-close text-danger mr-2"></i> 1 User</p>
+                        <p><i class="mdi mdi-close text-danger mr-2"></i> Free Support</p>
+                    </div>
+                    <div class="text-center py-3">
+                        <a href="#" class="btn btn-purple">Purchase now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="pricing-plan mt-3 p-3 active">
+                    <div class="plan-header px-3 mt-3">
+                        <div class="pricing-icon float-right">
+                            <i class="pe-7s-diamond h1 mt-0 text-primary"></i>
+                        </div>
+                        <h5 class="plan-title font-18">Multiple Application</h5>
+                        <p class="text-muted">Sed ut perspiciatis unde</p>
+                        <h2 class="pt-4"><sup><span class="font-18">$</span></sup> <span class="text-primary">120</span> <span class="font-18">Per License</span></h2>
+                    </div>
+                    <hr class="my-4">
+                    <div class="plan-content text-muted mb-4 px-3">
+                        <p><i class="mdi mdi-check text-primary mr-2"></i> 5 Projects</p>
+                        <p><i class="mdi mdi-check text-primary mr-2"></i> 1 GB Storage</p>
+                        <p><i class="mdi mdi-check text-primary mr-2"></i> No Domain</p>
+                        <p><i class="mdi mdi-check text-primary mr-2"></i> 1 User</p>
+                        <p><i class="mdi mdi-close text-danger mr-2"></i> Free Support</p>
+                    </div>
+                    <div class="text-center py-3">
+                        <a href="#" class="btn btn-purple">Purchase now</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4">
+                <div class="pricing-plan mt-3 p-3">
+                    <div class="plan-header px-3 mt-3">
+                        <div class="pricing-icon float-right">
+                            <i class="pe-7s-shield h1 mt-0 text-primary"></i>
+                        </div>
+                        <h5 class="plan-title font-18">Extended </h5>
+                        <p class="text-muted">Sed ut perspiciatis unde</p>
+                        <h2 class="pt-4"><sup><span class="font-18">$</span></sup> <span class="text-primary">999</span> <span class="font-18">Per License</span></h2>
+                    </div>
+                    <hr class="my-4">
+                    <div class="plan-content text-muted mb-4 px-3">
+                        <p><i class="mdi mdi-check text-primary mr-2"></i> 5 Projects</p>
+                        <p><i class="mdi mdi-check text-primary mr-2"></i> 1 GB Storage</p>
+                        <p><i class="mdi mdi-check text-primary mr-2"></i> No Domain</p>
+                        <p><i class="mdi mdi-check text-primary mr-2"></i> 1 User</p>
+                        <p><i class="mdi mdi-check text-primary mr-2"></i> Free Support</p>
+                    </div>
+                    <div class="text-center py-3">
+                        <a href="#" class="btn btn-purple">Purchase now</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container-fluid -->
+</section>
+<!-- pricing end -->
+
+<!-- testimonial start -->
+<section class="section bg-light" id="testimonial">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="title text-center mb-4">
+                    <i class="pe-7s-chat h1 text-primary mb-3"></i>
+                    <h3 class="font-22 mb-3">What our Users Says</h3>
+                    <p class="text-muted">If several languages coalesce the grammar of the resulting language</p>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="testi-box mt-4">
+                    <div class="testi-desc p-4">
+                        <p class="text-muted mb-0">" If several languages coalesce the grammar of the resulting language is more simple than that of the individual languages. "</p>
+                    </div>
+
+                    <div class="p-4">
+                        <div class="testi-img float-left mr-3">
+                            <img src="{{ url_for('static', filename='landing/images/users/img-1.png') }}" alt="" class="rounded-circle avatar-md">
+                        </div>
+                        <div>
+                            <h4 class="font-16 mb-1">James Barrett</h4>
+                            <p class="text-muted mb-2"> <small> - Minton User</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="testi-box mt-4">
+                    <div class="testi-desc p-4">
+                        <p class="text-muted mb-0">" Everyone realizes why a new common language would be desirable one could refuse to pay expensive translators to achieve this it would be necessary to have uniform grammar. "</p>
+                    </div>
+
+                    <div class="p-4">
+                        <div class="testi-img float-left mr-3">
+                            <img src="{{ url_for('static', filename='landing/images/users/img-2.png') }}" alt="" class="rounded-circle avatar-md">
+                        </div>
+                        <div>
+                            <h4 class="font-16 mb-1">Glenn Ziegler</h4>
+                            <p class="text-muted mb-2"><small> - Minton User</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="testi-box mt-4">
+                    <div class="testi-desc p-4">
+                        <p class="text-muted mb-0">" Separate existence is a myth Europe uses the same vocabulary the languages only differ in pronunciation and their most common words. "</p>
+                    </div>
+
+                    <div class="p-4">
+                        <div class="testi-img float-left mr-3">
+                            <img src="{{ url_for('static', filename='landing/images/users/img-3.png') }}" alt="" class="rounded-circle avatar-md">
+                        </div>
+                        <div>
+                            <h4 class="font-16 mb-1">Samuel Hicks</h4>
+                            <p class="text-muted mb-2"><small> - Minton User</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+        <div class="row mt-4 pt-4">
+            <div class="col-lg-3 col-sm-6">
+                <div class="client-images">
+                    <img src="{{ url_for('static', filename='landing/images/clients/1.png') }}" alt="logo-img" class="mx-auto img-fluid d-block">
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="client-images">
+                    <img src="{{ url_for('static', filename='landing/images/clients/2.png') }}" alt="logo-img" class="mx-auto img-fluid d-block">
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="client-images">
+                    <img src="{{ url_for('static', filename='landing/images/clients/3.png') }}" alt="logo-img" class="mx-auto img-fluid d-block">
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="client-images">
+                    <img src="{{ url_for('static', filename='landing/images/clients/4.png') }}" alt="logo-img" class="mx-auto img-fluid d-block">
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container-fluid -->
+</section>
+<!-- testimonial end -->
+
+<!-- faq start -->
+<section class="section" id="faq">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="title text-center mb-5">
+                    <i class="pe-7s-help1 h1 text-primary mb-3"></i>
+                    <h3 class="font-22 mb-3">Frequently Asked Questions</h3>
+                    <p class="text-muted">If several languages coalesce the grammar of the resulting language</p>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+        <div class="row align-items-center">
+            <div class="col-lg-5">
+                <div>
+                    <img src="{{ url_for('static', filename='landing/images/faq-img.png') }}" alt="" class="img-fluid mx-auto d-block">
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <ul class="nav nav-pills faq-nav-tabs nav-justified mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item text-sm-left">
+                        <a class="nav-link active" id="pills-general-tab" data-toggle="pill" href="#pills-general" role="tab" aria-controls="pills-general" aria-selected="true">
+                            <div class="clearfix">
+                                <i class="pe-7s-wallet text-purple float-md-right text-md-center h2 m-0"></i>
+                                <h4 class="mr-2 d-none d-sm-inline-block">General Questions</h4>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item text-sm-left">
+                        <a class="nav-link" id="pills-pricing-tab" data-toggle="pill" href="#pills-pricing" role="tab" aria-controls="pills-pricing" aria-selected="false">
+                            <div class="clearfix">
+                                <i class="pe-7s-notebook text-purple float-md-right h2 m-0"></i>
+                                <h4 class="mr-2 d-none d-sm-inline-block">Pricing & Plans</h4>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content faq-tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-general" role="tabpanel" aria-labelledby="pills-general-tab">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-4">
+                                    <div class="faq-box mb-4">
+                                        <div class="faq-question-q-box float-left mr-4">Q.</div>
+                                        <div class="overflow-hidden">
+                                            <h5 class="font-16 mt-0">What is Lorem Ipsum?</h5>
+                                            <p class="text-muted">The new common language will be more simple and regular than the existing European languages It will be as simple as occidental.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="faq-box mb-4">
+                                        <div class="faq-question-q-box float-left mr-4">Q.</div>
+                                        <div class="overflow-hidden">
+                                            <h5 class="font-16 mt-0">Why do we use it?</h5>
+                                            <p class="text-muted">It is a long established fact that a reader will be distracted by the readable content.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="faq-box">
+                                        <div class="faq-question-q-box float-left mr-4">Q.</div>
+                                        <div class="overflow-hidden">
+                                            <h5 class="font-16 mt-0">Where does it come from?</h5>
+                                            <p class="text-muted">If several languages coalesce, the grammar of the resulting language is more simple and regular of the individual languages.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- end tab-pane -->
+                    <div class="tab-pane fade" id="pills-pricing" role="tabpanel" aria-labelledby="pills-pricing-tab">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-4">
+                                    <div class="faq-box mb-4">
+                                        <div class="faq-question-q-box float-left mr-4">Q.</div>
+                                        <div class="overflow-hidden">
+                                            <h5 class="font-16 mt-0">Why do we use it?</h5>
+                                            <p class="text-muted">It is a long established fact that a reader will be distracted by the readable content.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="faq-box mb-4">
+                                        <div class="faq-question-q-box float-left mr-4">Q.</div>
+                                        <div class="overflow-hidden">
+                                            <h5 class="font-16 mt-0">Where does it come from?</h5>
+                                            <p class="text-muted">If several languages coalesce, the grammar of the resulting language is more simple and regular of the individual languages.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="faq-box">
+                                        <div class="faq-question-q-box float-left mr-4">Q.</div>
+                                        <div class="overflow-hidden">
+                                            <h5 class="font-16 mt-0">What is Lorem Ipsum?</h5>
+                                            <p class="text-muted">The new common language will be more simple and regular than the existing European languages It will be as simple as occidental.</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- end tab-pane -->
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+    </div>
+    <!-- end container-fluid -->
+</section>
+<!-- faq end -->
+{% endblock %}
+
+{% block page_javascript %}
+<script>
+    // This sample uses the Autocomplete widget to help the user select a
+    // place, then it retrieves the address components associated with that
+    // place, and then it populates the form fields with those details.
+    // This sample requires the Places library. Include the libraries=places
+    // parameter when you first load the API. For example:
+    // <script
+    // src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+    var placeSearch, autocomplete;
+
+    var componentForm = {
+      street_number: 'short_name',
+      route: 'long_name',
+      locality: 'long_name',
+      administrative_area_level_1: 'short_name',
+      country: 'long_name',
+      postal_code: 'short_name'
+    };
+
+    function initAutocomplete() {
+      // Create the autocomplete object, restricting the search predictions to
+      // geographical location types.
+      autocomplete = new google.maps.places.Autocomplete(
+          document.getElementById('autocomplete'), {types: ['geocode']});
+
+      // Avoid paying for data that you don't need by restricting the set of
+      // place fields that are returned to just the address components.
+      autocomplete.setFields(['address_component']);
+
+      // When the user selects an address from the drop-down, populate the
+      // address fields in the form.
+      autocomplete.addListener('place_changed', fillInAddress);
+    }
+
+    function fillInAddress() {
+      // Get the place details from the autocomplete object.
+      var place = autocomplete.getPlace();
+
+      for (var component in componentForm) {
+        document.getElementById(component).value = '';
+        document.getElementById(component).disabled = false;
+      }
+
+      // Get each component of the address from the place details,
+      // and then fill-in the corresponding field on the form.
+      for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        if (componentForm[addressType]) {
+          var val = place.address_components[i][componentForm[addressType]];
+          document.getElementById(addressType).value = val;
+        }
+      }
+    }
+
+    // Bias the autocomplete object to the user's geographical location,
+    // as supplied by the browser's 'navigator.geolocation' object.
+    function geolocate() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var geolocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          var circle = new google.maps.Circle(
+              {center: geolocation, radius: position.coords.accuracy});
+          autocomplete.setBounds(circle.getBounds());
+        });
+      }
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVVPEv5S9oPONvjA9uQK1mgOMm9l89X2g&libraries=places&callback=initAutocomplete"
+      async defer></script>
+{% endblock %}

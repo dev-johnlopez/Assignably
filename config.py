@@ -18,6 +18,7 @@ class Config(object):
     SECURITY_EMAIL_SENDER = os.environ.get('SECURITY_EMAIL_SENDER')
     SECURITY_FLASH_MESSAGES = True
     SECURITY_SEND_REGISTER_EMAIL = False
+    SECURITY_REGISTER_URL = '/u/register'
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None

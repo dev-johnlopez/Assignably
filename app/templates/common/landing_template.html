@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <title>Minton - Responsive Admin Dashboard & Landing Page Template</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="images/favicon.ico">
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='landing/css/bootstrap.min.css') }}" type="text/css">
+
+        <!--Material Icon -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='landing/css/materialdesignicons.min.css') }}" />
+
+        <!--pe-icon-7 Icon -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='landing/css/pe-icon-7-stroke.css') }}" />
+
+        <!-- Custom  css -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='landing/css/style.css') }}" />
+
+    </head>
+
+    <body>
+        {% include 'common/components/landing/header.html' %}
+        {% block content %}{% endblock %}
+        {% include 'common/components/landing/footer.html' %}
+        <!-- javascript -->
+        <script src="{{ url_for('static', filename='landing/js/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='landing/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='landing/js/jquery.easing.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='landing/js/scrollspy.min.js') }}"></script>
+        {% block page_javascript %}{% endblock %}
+        <!-- custom js -->
+        <script src="{{ url_for('static', filename='landing/js/app.js') }}"></script>
+    </body>
+
+</html>

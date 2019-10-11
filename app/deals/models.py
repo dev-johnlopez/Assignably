@@ -1,5 +1,6 @@
 from flask import current_app, url_for, g
 from app import db, geolocator
+from app.mixins import AuditMixin, DealStateMixin
 from sqlalchemy import event
 
 
@@ -63,7 +64,7 @@ class Address(db.Model):
             if location is not None:
                 self.latitude = location.latitude
                 self.longitude = location.longitude
-        except Error as e:
+        except Exception as e:
             current_app.logger.error('Unable to geocode address')
 
 
@@ -84,7 +85,7 @@ class File(db.Model):
         return '{}'.format(self.name)
 
 
-class Deal(db.Model):
+class Deal(db.Model, AuditMixin, DealStateMixin):
     __tablename__ = 'deal'
     id = db.Column(db.Integer, primary_key=True)
     address_id = db.Column(db.Integer, db.ForeignKey('address.id'))

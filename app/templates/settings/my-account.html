@@ -1,0 +1,28 @@
+{% extends 'common/backend_template.html' %}
+{% block content %}
+{% from "common/macros/_vertical_form.html" import render_field_with_errors %}
+<div class="row">
+    <!-- Right Sidebar -->
+    <div class="col-12">
+      <div class="card-box">
+        <h4 class="text-dark  header-title m-t-0">Your Details</h4>
+        <p class="text-muted m-b-25 font-13">
+            Maintain your account information here.
+        </p>
+        <form method="post">
+          {{ form.hidden_tag() }}
+          {{ form.contact.hidden_tag() }}
+          {{ render_field_with_errors(form.first_name, class="form-control") }}
+          {{ render_field_with_errors(form.last_name, class="form-control") }}
+          {{ render_field_with_errors(form.phone, class="form-control") }}
+          {{ render_field_with_errors(form.email, class="form-control") }}
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div> <!-- end col-12 -->
+</div><!-- End row -->
+{% endblock %}

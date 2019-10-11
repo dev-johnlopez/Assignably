@@ -1,4 +1,13 @@
 {% extends 'common/backend_template.html' %}
+{% block page_css %}
+<!-- Plugins css-->
+<link href="{{ url_for('static', filename='backend/libs/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet" />
+<link href="{{ url_for('static', filename='backend/libs/switchery/switchery.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for('static', filename='backend/libs/multiselect/multi-select.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for('static', filename='backend/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for('static', filename='backend/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for('static', filename='backend/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}" rel="stylesheet" />
+{% endblock %}
 {% block content %}
 {% from "common/macros/_table_form.html" import render_field_with_errors %}
 <div class="row">
@@ -15,16 +24,16 @@
           <table class="table mb-0">
             <thead>
             <tr>
-                <th>#</th>
-                <th>Email Name</th>
-                <th>Send To</th>
+                <th scope="col">#</th>
+                <th scope="col">Email Name</th>
+                <th scope="col">Send To</th>
             </tr>
             </thead>
             <tbody>
               <tr>
                   <td>1</td>
                   <td>New Partnership Request</td>
-                  <td>{{ render_field_with_errors(form.partnership_email_recipient, class="form-control") }}</td>
+                  <td>{{ render_field_with_errors(form.partnership_email_recipient, size="2", class="select2 select2-multiple", multiple="multiple", **{'data-placeholder':'Choose ...'}) }}</td>
               </tr>
             </tbody>
           </table>
@@ -34,4 +43,18 @@
     </div> <!-- end col-12 -->
 
 </div><!-- End row -->
+{% endblock %}
+
+{% block page_javascript %}
+<!-- Plugins Js -->
+<script src="{{ url_for('static', filename='backend/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+<script src="{{ url_for('static', filename='backend/libs/switchery/switchery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='backend/libs/multiselect/jquery.multi-select.js') }}"></script>
+<script src="{{ url_for('static', filename='backend/libs/jquery-quicksearch/jquery.quicksearch.min.js') }}"></script>
+<script src="{{ url_for('static', filename='backend/libs/select2/select2.min.js') }}"></script>
+<script src="{{ url_for('static', filename='backend/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
+<script src="{{ url_for('static', filename='backend/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
+<script src="{{ url_for('static', filename='backend/libs/jquery-mask-plugin/jquery.mask.min.js') }}"></script>
+<!-- init js -->
+<script src="{{ url_for('static', filename='backend/js/pages/form-advanced.init.js') }}"></script>
 {% endblock %}

@@ -34,6 +34,11 @@
                             class="ti-settings"></i><span> Settings </span></a>
                 </li>
 
+                <li>
+                    <a href="{{ url_for('settings.company') }}" class="waves-effect waves-primary"><i
+                            class="ti-user"></i><span> Company </span></a>
+                </li>
+
 
                 {% if current_user.is_admin() %}
                   <li>

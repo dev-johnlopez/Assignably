@@ -4,7 +4,7 @@ from flask_admin.model import BaseModelView
 from flask_admin.contrib import sqla
 from flask_admin.contrib.sqla import ModelView
 from flask_security import current_user
-from app.auth.models import User, Company
+from app.auth.models import User, Company, Role
 from app.deals.models import Deal
 
 
@@ -14,7 +14,7 @@ def create_admin(app, db):
     admin.add_view(MyModelView(Company, db.session))
     admin.add_view(MyModelView(User, db.session))
     admin.add_view(MyModelView(Deal, db.session))
-    # admin.add_view(MyModelView(Role, db.session))
+    admin.add_view(MyModelView(Role, db.session))
     # admin.add_view(rediscli.RedisCli(Redis()))
     return admin
 

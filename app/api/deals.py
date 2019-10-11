@@ -37,8 +37,8 @@ def create_deal():
     db.session.add(deal)
     db.session.commit()
     recipient = g.current_user.email
-    if g.current_user.getSettings().partnership_email_recipient is not None:
-        recipient = g.current_user.getSettings().partnership_email_recipient
+    if g.current_user.get_settings().partnership_email_recipient is not None:
+        recipient = g.current_user.get_settings().partnership_email_recipient
     send_email('New Deal Notification!',
                sender='support@assignably.com', recipients=[recipient],
                text_body=render_template('emails/new_deal.txt',

@@ -1,0 +1,103 @@
+<header class="sticky">
+    <div class="tagline d-none d-lg-block">
+        <div class="container-fluid">
+            <div class="float-left info-link">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item">
+                        <i class="mdi mdi-phone-classic mr-1"></i> (847) 780-9569
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                            <i class="mdi mdi-email mr-1"></i> contact@assignably.com
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--<div class="float-right">
+                <ul class="list-inline social-links mb-0">
+                    <li class="list-inline-item">
+                        <a href="#">
+                            <i class="mdi mdi-facebook"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                            <i class="mdi mdi-twitter"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#">
+                            <i class="mdi mdi-google-plus"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>-->
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" id="navbar">
+      <div class="container-fluid">
+      <a href="{{ url_for('landing.index') }}" class="navbar-brand">
+          <h3 class="text-black logo-dark">Assignably</h3>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="mdi mdi-menu"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav ml-auto navbar-center" id="mySidenav">
+              <li class="nav-item">
+                  <a href="{{ url_for('landing.sell') }}" class="nav-link text-dark">Sell</a>
+              </li>
+              <li class="nav-item">
+                  <a href="{{ url_for('landing.buy') }}" class="nav-link text-dark">Buy</a>
+              </li>
+              <li class="nav-item">
+                  <a href="{{ url_for('landing.how') }}" class="nav-link text-dark">How it works</a>
+              </li>
+              <li class="nav-item">
+                  <a href="{{ url_for('landing.pricing') }}" class="nav-link text-dark">Pricing</a>
+              </li>
+              <li class="nav-item">
+                  <a href="{{ url_for_security('login') }}" class="nav-link text-dark">Login</a>
+              </li>
+          </ul>
+      </div>
+      </div>
+    </nav>
+
+    {#<!--Navbar Start-->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-custom" id="navbar">
+        <div class="container-fluid">
+            <!-- LOGO -->
+            <a href="{{ url_for('landing.index') }}" class="logo text-uppercase">
+                <h3 class="text-white logo-light">Assignably</h3>
+                <h3 class="text-black logo-dark">Assignably</h3>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="mdi mdi-menu"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ml-auto navbar-center" id="mySidenav">
+                    <li class="nav-item">
+                        <a href="{{ url_for('landing.sell') }}" class="nav-link">Sell</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('landing.buy') }}" class="nav-link">Buy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('landing.how') }}" class="nav-link">How it works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('landing.pricing') }}" class="nav-link">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for_security('login') }}" class="nav-link">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>#}
+    <!-- Navbar End -->
+</header>

@@ -1,5 +1,5 @@
 from app import db
-from app.deals.models import Contact
+from app.deals.models import Contact, Deal
 from flask import current_app
 from flask_security import UserMixin, RoleMixin
 from base64 import b64encode
@@ -19,7 +19,24 @@ roles_users = db.Table('roles_users',
 class Company(db.Model):
     __tablename__ = 'company'
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
     users = db.relationship("User", back_populates="company")
+    settings = db.relationship("Settings",
+                               uselist=False,
+                               back_populates="company")
+
+    def add_user(self, user):
+        if self.users is None:
+            self.users = []
+        self.users.append(user)
+
+    def get_deals(self):
+        return Deal.query.filter_by(created_by_id=self.id).all()
+
+    def get_settings(self):
+        if self.settings is None:
+            self.settings = Settings()
+        return self.settings
 
 
 class User(db.Model, UserMixin):
@@ -48,28 +65,37 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
     contact = db.relationship("Contact", uselist=False, back_populates="user")
-    settings = db.relationship("Settings",
-                               uselist=False,
-                               back_populates="user")
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
-        self.contact = Contact(email=self.email)
+        # print(str(**kwargs))
+        # self.contact = Contact(email=self.email)
 
     def __repr__(self):
-        return '%s' % (self.email)
+        return '{} {}'.format(self.contact.first_name, self.contact.last_name)
 
     def get_deals(self):
-        return [deal_contact.deal
-                for deal_contact in self.contact.deal_contacts]
+        return self.company.get_deals()
 
     def is_admin(self):
-        return self.email in current_app.config['ADMINS']
+        return self.email.upper() in \
+            (email.upper() for email in current_app.config['ADMINS'])
 
-    def getSettings(self):
+    def get_settings(self):
         if self.settings is None:
             self.settings = Settings()
         return self.settings
+
+    def add_role(self, role):
+        if self.roles is None:
+            self.roles = []
+        self.roles.append(role)
+
+    def get_roles_string(self):
+        return ""
+        if self.roles is None:
+            return ""
+        return ", ".join(self.roles)
 
     @staticmethod
     def check_api_key(api_key):
@@ -86,7 +112,7 @@ class Role(db.Model, RoleMixin):
     description = db.Column(db.String(255))
 
     def __repr__(self):
-        return '%s' % (self.name)
+        return '{}'.format(self.name)
 
 
 class Settings(db.Model, UserMixin):
@@ -94,6 +120,6 @@ class Settings(db.Model, UserMixin):
     __tablename__ = 'settings'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship("User", back_populates="settings")
+    company_id = db.Column(db.Integer, db.ForeignKey('company.id'))
+    company = db.relationship("Company", back_populates="settings")
     partnership_email_recipient = db.Column(db.String(255), unique=True)
