@@ -11,13 +11,16 @@ function setIframeHeightCO(id, ht) {
 // iframed document sends its height using postMessage
 function handleDocHeightMsg(e) {
     // check origin
-    if ( e.origin === 'http://www.assignably.com' ) {
+    if ( e.origin === 'https://www.assignably.com' ) {
       // parse data
       var data = JSON.parse( e.data );
+      print(data);
       // check data object
       if ( data['docHeight'] ) {
+        print(data['docHeight']);
         setIframeHeightCO( 'submit-frame', data['docHeight'] );
       } else if ( data['href'] ) {
+        print(data['href']);
         setIframe('ifrm', data['href'] );
       }
     }
