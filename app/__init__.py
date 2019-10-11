@@ -10,6 +10,7 @@ from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
 from flask_sqlalchemy import SQLAlchemy
+from flask_sslify import SSLify
 from flask_cors import CORS
 from elasticsearch import Elasticsearch
 from geopy.geocoders import Nominatim
@@ -39,6 +40,9 @@ def create_app(config_class=Config):
     mail.init_app(app)
     cors.init_app(app)
     dropzone.init_app(app)
+    if not app.debug and not app.testing and not app.config['SSL_DISABLE']:
+        from flask_sslify import SSLify
+        sslify = SSLify(app)
 
     from app.api import bp as api_bp
     from app.auth.views import bp as auth_bp
