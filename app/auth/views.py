@@ -51,6 +51,7 @@ def register():
                           phone=form.contact.phone.data)
         company = Company(name=form.company.company_name.data)
         company.add_user(user)
+        company.get_settings().partnership_email_recipient = user.email
         user_datastore = SQLAlchemyUserDatastore(db, User, Role)
         role = user_datastore.find_or_create_role("Company Admin")
         user_datastore.add_role_to_user(user, role)

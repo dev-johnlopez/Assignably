@@ -88,7 +88,3 @@ def create_app(config_class=Config):
         app.logger.info('Assignably startup')
 
     return app
-
-@app.route('/')
-def index():
-    return redirect(url_for('deals.index'))

@@ -21,6 +21,7 @@ class Company(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
     users = db.relationship("User", back_populates="company")
+    deals = db.relationship("Deal", back_populates="company", foreign_keys='Deal.company_id')
     settings = db.relationship("Settings",
                                uselist=False,
                                back_populates="company")
@@ -31,7 +32,12 @@ class Company(db.Model):
         self.users.append(user)
 
     def get_deals(self):
-        return Deal.query.filter_by(created_by_id=self.id).all()
+        return self.deals
+
+    def add_deal(self, deal):
+        if self.deals is None:
+            self.deals = []
+        self.deals.append(deal)
 
     def get_settings(self):
         if self.settings is None:
@@ -68,8 +74,6 @@ class User(db.Model, UserMixin):
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
-        # print(str(**kwargs))
-        # self.contact = Contact(email=self.email)
 
     def __repr__(self):
         return '{} {}'.format(self.contact.first_name, self.contact.last_name)
@@ -82,9 +86,7 @@ class User(db.Model, UserMixin):
             (email.upper() for email in current_app.config['ADMINS'])
 
     def get_settings(self):
-        if self.settings is None:
-            self.settings = Settings()
-        return self.settings
+        return self.company.get_settings()
 
     def add_role(self, role):
         if self.roles is None:
@@ -122,4 +124,4 @@ class Settings(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'))
     company = db.relationship("Company", back_populates="settings")
-    partnership_email_recipient = db.Column(db.String(255), unique=True)
+    partnership_email_recipient = db.Column(db.String(255))

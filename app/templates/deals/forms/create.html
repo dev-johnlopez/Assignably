@@ -27,8 +27,8 @@
   <hr />
   {{ render_monetary_field_with_errors(form.property_tax, class="form-control", required=True) }}
   {{ render_field_with_errors(form.sq_feet, class="form-control", required=True) }}
-  {{ render_field_with_errors(form.bedrooms, class="form-control", required=True) }}
-  {{ render_field_with_errors(form.bathrooms, class="form-control", required=True) }}
+  {{ render_field_with_errors(form.bedrooms_str, class="form-control", required=True) }}
+  {{ render_field_with_errors(form.bathrooms_str, class="form-control", required=True) }}
   {{ render_monetary_field_with_errors(form.after_repair_value, class="form-control", required=True) }}
   {{ render_monetary_field_with_errors(form.rehab_estimate, class="form-control", required=True) }}
   {{ render_field_with_errors(form.under_contract_ind, class="form-control", required=True) }}

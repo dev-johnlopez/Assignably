@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 8047dad83480
+Revision ID: 8bab41234760
 Revises: 
-Create Date: 2019-10-10 20:48:26.872391
+Create Date: 2019-10-11 10:14:52.417324
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8047dad83480'
+revision = '8bab41234760'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -61,10 +61,12 @@ def upgrade():
     sa.Column('purchase_price', sa.Integer(), nullable=True),
     sa.Column('list_price', sa.Integer(), nullable=True),
     sa.Column('under_contract_ind', sa.Boolean(), nullable=True),
+    sa.Column('company_id', sa.Integer(), nullable=True),
     sa.Column('updated_by_id', sa.Integer(), nullable=True),
     sa.Column('created_by_id', sa.Integer(), nullable=True),
     sa.Column('status', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['address_id'], ['address.id'], ),
+    sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
     sa.ForeignKeyConstraint(['created_by_id'], ['company.id'], name='fk_Deal_created_by_id', use_alter=True),
     sa.ForeignKeyConstraint(['updated_by_id'], ['company.id'], name='fk_Deal_updated_by_id', use_alter=True),
     sa.PrimaryKeyConstraint('id')
@@ -74,8 +76,7 @@ def upgrade():
     sa.Column('company_id', sa.Integer(), nullable=True),
     sa.Column('partnership_email_recipient', sa.String(length=255), nullable=True),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('partnership_email_recipient')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),

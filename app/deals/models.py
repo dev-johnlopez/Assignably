@@ -101,6 +101,8 @@ class Deal(db.Model, AuditMixin, DealStateMixin):
     purchase_price = db.Column(db.Integer)
     list_price = db.Column(db.Integer)
     under_contract_ind = db.Column(db.Boolean)
+    company_id = db.Column(db.Integer, db.ForeignKey('company.id'))
+    company = db.relationship("Company", back_populates="deals", foreign_keys=[company_id])
     contacts = db.relationship("DealContact",
                                cascade="all, delete-orphan")
     proformas = db.relationship("Proforma",

@@ -106,15 +106,17 @@ class DealForm(FlaskForm):
     rehab_estimate = IntegerField('Rehab Estimate', validators=[Optional()])
     sq_feet = IntegerField('Sq. Feet', validators=[Optional()])
     bedrooms = IntegerField('Bedrooms', validators=[Optional()])
+    bedrooms_str = StringField('Bedrooms', validators=[Optional()])
     bathrooms = IntegerField('Bathrooms', validators=[Optional()])
+    bathrooms_str = StringField('Bathrooms', validators=[Optional()])
     after_repair_value = IntegerField('ARV', validators=[Optional()])
     purchase_price = IntegerField('Purchase Price', validators=[Optional()])
     list_price = IntegerField('List Price', validators=[Optional()])
     property_tax = IntegerField('Property Tax', validators=[Optional()])
     under_contract_ind = SelectField('Under Contract?',
                                      choices=[
-                                            ('', ''),
+                                            (False, 'No'),
                                             (True, 'Yes'),
-                                            (False, 'No')],
-                                     validators=[DataRequired()],
+                                            ('', 'Select a value...')
+                                     ],
                                      coerce=lambda x: x == 'True')

@@ -4,7 +4,7 @@ from flask_security import current_user, login_required, current_user
 from app import db
 from app.email import send_email
 from app.deals.forms import DealForm
-from app.auth.models import User
+from app.auth.models import User, Company
 from app.deals.models import Deal, DealContact, DealContactRole, Contact, File
 import os
 import json
@@ -42,6 +42,8 @@ def create():
             file = File(url=file.url)
             deal.add_file(file)
         form.populate_obj(deal)
+        current_user.company.add_deal(deal)
+        db.session.add(current_user.company)
         db.session.add(deal)
         db.session.commit()
         return redirect(url_for('.view', deal_id=deal.id))
@@ -59,7 +61,7 @@ def create():
 def iframe(user_id):
     form = DealForm()
     if form.validate_on_submit():
-        user = User.query.get_or_404(user_id)
+        company = Company.query.get_or_404(user_id)
         deal = Deal()
         submitted_by = None
         for contact_form in form.contacts:
@@ -81,24 +83,21 @@ def iframe(user_id):
 
         form.populate_obj(deal)
         deal_contact = DealContact()
-        contact = user.contact
-        deal_contact.contact = contact
-        role = DealContactRole(name="Partner")
-        deal_contact.add_role(role)
-        deal.add_contact(deal_contact)
+        company.add_deal(deal)
         db.session.add(deal)
+        db.session.add(company)
         db.session.commit()
-        recipient = user.email
-        if user.get_settings().partnership_email_recipient is not None:
-            recipient = user.get_settings().partnership_email_recipient
+        recipient = company.users[0].email
+        if company.get_settings().partnership_email_recipient is not None:
+            recipient = company.get_settings().partnership_email_recipient
         send_email('New Deal Notification!',
                    sender='support@assignably.com', recipients=[recipient],
                    text_body=render_template('emails/new_deal.txt',
-                                             user=user,
+                                             company=company,
                                              submitted_by=submitted_by,
                                              deal=deal),
                    html_body=render_template('emails/new_deal.html',
-                                             user=user,
+                                             company=company,
                                              submitted_by=submitted_by,
                                              deal=deal),
                    attachments=[],
@@ -106,11 +105,12 @@ def iframe(user_id):
         return render_template('deals/submitted.html',
                                user_id=user_id)
 
-    deal_contact_data = {
-        'contact': {},
-        'roles': []
-    }
-    form.contacts.append_entry(deal_contact_data)
+    if len(form.contacts) == 0:
+        deal_contact_data = {
+            'contact': {},
+            'roles': []
+        }
+        form.contacts.append_entry(deal_contact_data)
     return render_template('deals/iframe.html',
                            form=form)
 
@@ -122,6 +122,7 @@ def view(deal_id):
     return render_template('deals/view.html',
                            title="{}".format(deal),
                            deal=deal)
+
 
 @bp.route('/<deal_id>/delete')
 @login_required
