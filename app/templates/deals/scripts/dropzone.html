@@ -21,7 +21,7 @@
           // Set signed upload URL for each file being processing
           this.on('processing', (file) => {
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type, false);
+            xhr.open("GET", "/deals/sign_s3?file_name="+file.name+"&file_type="+file.type, false);
             xhr.onreadystatechange = function(){
               if(xhr.readyState === 4){
                 if(xhr.status === 200){
