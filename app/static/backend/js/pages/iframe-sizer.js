@@ -11,7 +11,7 @@ function setIframeHeightCO(id, ht) {
 // iframed document sends its height using postMessage
 function handleDocHeightMsg(e) {
     // check origin
-    if ( e.origin === 'http://www.assignably.com' ) {
+    if ( e.origin === 'https://www.assignably.com' ) {
       // parse data
       var data = JSON.parse( e.data );
       // check data object
