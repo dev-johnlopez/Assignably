@@ -1,0 +1,47 @@
+{% from "common/macros/_horizontal_form.html" import render_field_with_errors, render_monetary_field_with_errors %}
+
+{% for criteria_form in form.investment_criteria %}
+{{ criteria_form.hidden_tag() }}
+<div class="row-fluid mt-3">
+  <div class="card-box">
+    <h5 class="card-title">Investment Criteria</h5>
+    <hr />
+    {{ render_field_with_errors(criteria_form.property_type, class="form-control", required=True) }}
+    {{ render_field_with_errors(criteria_form.flip, class="form-control", required=True) }}
+    {{ render_field_with_errors(criteria_form.rental, class="form-control", required=True) }}
+    {{ render_field_with_errors(criteria_form.minimum_units, class="form-control", required=True) }}
+    {{ render_field_with_errors(criteria_form.maximum_units, class="form-control", required=True) }}
+  </div>
+</div>
+<div class="row-fluid mt-3">
+  <div class="card-box">
+    <div class=row>
+      <h5 class="card-title">Investing Locations</h5>
+    </div>
+    <hr />
+    <div class="row">
+      <table class="table">
+        <thead class="thead-default">
+          <tr>
+              <th>#</th>
+              <th>Location Type</th>
+              <th>Location Code</th>
+          </tr>
+        </thead>
+        <tbody id="location-table">
+          {% for location in form.locations %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>Zip Code</td>
+                <td>{{ location.location_code(class="form-control") }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="row pull-right">
+      <button class="btn btn-primary" id="add-location">Add Location</button>
+    </div>
+  </div>
+</div>
+{% endfor %}

@@ -1,7 +1,7 @@
 from flask import Blueprint, g, render_template, redirect, url_for, g, flash
 from flask_security import current_user, login_required, current_user
 from app import db
-from .forms import SettingsForm, CompanyForm, AccountForm
+from .forms import SettingsForm, TenantForm, AccountForm
 from flask_security.registerable import register_user
 from app.deals.forms import ContactForm
 from app.deals.models import Contact
@@ -14,15 +14,15 @@ bp = Blueprint('settings', __name__)
 
 @bp.route('/', methods=['GET', 'POST'])
 @login_required
-def notifications():
+def notifications(subdomain):
     form = SettingsForm()
-    user_list=[(user.id, user) for user in current_user.company.users]
+    user_list=[(user.id, user) for user in current_user.tenant.users]
     #passing group_list to the form
     form.partnership_email_recipient.choices = user_list
     if form.validate_on_submit():
         flash('You\'re info has been saved.', 'info')
-        form.populate_obj(current_user.company.get_settings())
-        db.session.add(current_user.company.get_settings())
+        form.populate_obj(current_user.tenant.get_settings())
+        db.session.add(current_user.tenant.get_settings())
         db.session.commit()
     return render_template('settings/notifications.html',
                            title='Settings',
@@ -31,12 +31,12 @@ def notifications():
 
 @bp.route('/company', methods=['GET', 'POST'])
 @login_required
-def company():
-    form = CompanyForm(obj=current_user.company)
+def company(subdomain):
+    form = TenantForm(obj=current_user.tenant)
     if form.validate_on_submit():
         flash('You\'re info has been saved.', 'info')
-        form.populate_obj(current_user.company)
-        db.session.add(current_user.company)
+        form.populate_obj(current_user.tenant)
+        db.session.add(current_user.tenant)
         db.session.commit()
     return render_template('settings/company.html',
                            title='My Company',
@@ -45,7 +45,7 @@ def company():
 
 @bp.route('/new-user', methods=['GET', 'POST'])
 @login_required
-def new_user():
+def new_user(subdomain):
     form = ContactForm()
     if form.validate_on_submit():
         user_data = {
@@ -62,10 +62,10 @@ def new_user():
                           email=form.email.data,
                           phone=form.phone.data)
         user.contact = contact
-        user.company = current_user.company
+        user.tenant = current_user.tenant
         db.session.add(contact)
         db.session.add(user)
-        db.session.add(current_user.company)
+        db.session.add(current_user.tenant)
         db.session.commit()
         return redirect(url_for('.company'))
     flash(form.errors, 'info')
@@ -75,7 +75,7 @@ def new_user():
 
 @bp.route('<user_id>/edit-user', methods=['GET', 'POST'])
 @login_required
-def edit_user(user_id):
+def edit_user(subdomain, user_id):
     user = User.query.get_or_404(user_id)
     form = ContactForm(obj=user.contact)
     if form.validate_on_submit():
@@ -91,7 +91,7 @@ def edit_user(user_id):
 
 @bp.route('/account', methods=['GET', 'POST'])
 @login_required
-def account():
+def account(subdomain):
     form = AccountForm(obj=current_user)
     if form.validate_on_submit():
         flash('You\'re info has been saved.', 'info')

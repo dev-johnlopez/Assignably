@@ -1,0 +1,50 @@
+{% extends "security/layouts/template.html" %}
+
+{% from "security/_macros.html" import render_field_with_errors, render_field, render_field_with_label_after %}
+
+{% block form %}
+<div class="card">
+
+  <div class="card-body p-4">
+    <div class="text-center w-75 m-auto">
+      <h2>
+            <span class="logo-sm-text-light">Assignably</span>
+      </h2>
+    </div>
+
+
+    <form action="{{ url_for('security.select_account', email=email) }}" method="GET" name="tenant_form">
+        {{ tenant_form.hidden_tag() }}
+        {{ tenant_form.email() }}
+        <div class="form-group mb-3">
+            <label for="emailaddress">Select your organization...</label>
+            {{ render_field(tenant_form.organization, autofocus="true", required="true", class="custom-select mt-3") }}
+            {% if tenant_form.organization.errors %}
+              {% for error in tenant_form.organization.errors %}
+              <div class="invalid-feedback d-block">
+                {{ error }}
+              </div>
+              {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group mb-0 text-center">
+            <button class="btn btn-primary btn-block" type="submit"> Submit </button>
+        </div>
+    </form>
+  </div> <!-- end card-body -->
+</div>
+<!-- end card -->
+
+
+<div class="row mt-3">
+    <div class="col-12 text-center">
+        <p> <a href="pages-recoverpw.html" class="text-muted ml-1">Forgot your password?</a></p>
+        <p class="text-muted">
+          Don't have an account?
+          {#<a href="{{ url_for_security('register') }}" class="text-primary font-weight-medium ml-1">Sign Up</a>#}
+          <a href="{{ url_for('security.tenant_register') }}" class="text-primary font-weight-medium ml-1">Sign Up</a>
+        </p>
+    </div> <!-- end col -->
+</div>
+{% endblock %}

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 8bab41234760
+Revision ID: 9627b757ae50
 Revises: 
-Create Date: 2019-10-11 10:14:52.417324
+Create Date: 2019-12-01 15:05:37.689234
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8bab41234760'
+revision = '9627b757ae50'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -33,17 +33,19 @@ def upgrade():
     sa.Column('longitude', sa.Numeric(precision=9, scale=6), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('company',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=255), nullable=True),
-    sa.PrimaryKeyConstraint('id')
-    )
     op.create_table('role',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=80), nullable=True),
     sa.Column('description', sa.String(length=255), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
+    )
+    op.create_table('tenant',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=255), nullable=True),
+    sa.Column('subdomain', sa.String(length=64), nullable=True),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('subdomain')
     )
     op.create_table('deal',
     sa.Column('created_at', sa.DateTime(), nullable=True),
@@ -61,21 +63,21 @@ def upgrade():
     sa.Column('purchase_price', sa.Integer(), nullable=True),
     sa.Column('list_price', sa.Integer(), nullable=True),
     sa.Column('under_contract_ind', sa.Boolean(), nullable=True),
-    sa.Column('company_id', sa.Integer(), nullable=True),
+    sa.Column('tenant_id', sa.Integer(), nullable=True),
     sa.Column('updated_by_id', sa.Integer(), nullable=True),
     sa.Column('created_by_id', sa.Integer(), nullable=True),
     sa.Column('status', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['address_id'], ['address.id'], ),
-    sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
-    sa.ForeignKeyConstraint(['created_by_id'], ['company.id'], name='fk_Deal_created_by_id', use_alter=True),
-    sa.ForeignKeyConstraint(['updated_by_id'], ['company.id'], name='fk_Deal_updated_by_id', use_alter=True),
+    sa.ForeignKeyConstraint(['created_by_id'], ['user.id'], name='fk_Deal_created_by_id', use_alter=True),
+    sa.ForeignKeyConstraint(['tenant_id'], ['tenant.id'], ),
+    sa.ForeignKeyConstraint(['updated_by_id'], ['user.id'], name='fk_Deal_updated_by_id', use_alter=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('settings',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('company_id', sa.Integer(), nullable=True),
+    sa.Column('tenant_id', sa.Integer(), nullable=True),
     sa.Column('partnership_email_recipient', sa.String(length=255), nullable=True),
-    sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
+    sa.ForeignKeyConstraint(['tenant_id'], ['tenant.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user',
@@ -90,10 +92,9 @@ def upgrade():
     sa.Column('last_login_ip', sa.String(length=40), nullable=True),
     sa.Column('current_login_ip', sa.String(length=40), nullable=True),
     sa.Column('login_count', sa.Integer(), nullable=True),
-    sa.Column('company_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email')
+    sa.Column('tenant_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['tenant_id'], ['tenant.id'], ),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_user_api_key'), 'user', ['api_key'], unique=True)
     op.create_table('contact',
@@ -113,6 +114,14 @@ def upgrade():
     sa.Column('url', sa.String(length=500), nullable=True),
     sa.Column('deal_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['deal_id'], ['deal.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('investor',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('tenant_id', sa.Integer(), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['tenant_id'], ['tenant.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('proforma',
@@ -138,9 +147,9 @@ def upgrade():
     sa.Column('sales_commission_rate', sa.Numeric(precision=5, scale=2), nullable=True),
     sa.Column('updated_by_id', sa.Integer(), nullable=True),
     sa.Column('created_by_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['created_by_id'], ['company.id'], name='fk_Proforma_created_by_id', use_alter=True),
+    sa.ForeignKeyConstraint(['created_by_id'], ['user.id'], name='fk_Proforma_created_by_id', use_alter=True),
     sa.ForeignKeyConstraint(['deal_id'], ['deal.id'], ),
-    sa.ForeignKeyConstraint(['updated_by_id'], ['company.id'], name='fk_Proforma_updated_by_id', use_alter=True),
+    sa.ForeignKeyConstraint(['updated_by_id'], ['user.id'], name='fk_Proforma_updated_by_id', use_alter=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('roles_users',
@@ -159,9 +168,9 @@ def upgrade():
     sa.Column('lifespan', sa.Integer(), nullable=True),
     sa.Column('updated_by_id', sa.Integer(), nullable=True),
     sa.Column('created_by_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['created_by_id'], ['company.id'], name='fk_CapitalExpenditure_created_by_id', use_alter=True),
+    sa.ForeignKeyConstraint(['created_by_id'], ['user.id'], name='fk_CapitalExpenditure_created_by_id', use_alter=True),
     sa.ForeignKeyConstraint(['proforma_id'], ['proforma.id'], ),
-    sa.ForeignKeyConstraint(['updated_by_id'], ['company.id'], name='fk_CapitalExpenditure_updated_by_id', use_alter=True),
+    sa.ForeignKeyConstraint(['updated_by_id'], ['user.id'], name='fk_CapitalExpenditure_updated_by_id', use_alter=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('deal_contact',
@@ -170,6 +179,17 @@ def upgrade():
     sa.Column('contact_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['contact_id'], ['contact.id'], ),
     sa.ForeignKeyConstraint(['deal_id'], ['deal.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('investmentcriteria',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('investor_id', sa.Integer(), nullable=True),
+    sa.Column('property_type', sa.Integer(), nullable=True),
+    sa.Column('flip', sa.Integer(), nullable=True),
+    sa.Column('rental', sa.Integer(), nullable=True),
+    sa.Column('minimum_units', sa.Integer(), nullable=True),
+    sa.Column('maximum_units', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['investor_id'], ['investor.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('line_item',
@@ -186,10 +206,10 @@ def upgrade():
     sa.Column('updated_by_id', sa.Integer(), nullable=True),
     sa.Column('created_by_id', sa.Integer(), nullable=True),
     sa.Column('calculation', sa.String(length=255), nullable=True),
-    sa.ForeignKeyConstraint(['created_by_id'], ['company.id'], name='fk_LineItem_created_by_id', use_alter=True),
+    sa.ForeignKeyConstraint(['created_by_id'], ['user.id'], name='fk_LineItem_created_by_id', use_alter=True),
     sa.ForeignKeyConstraint(['expense_proforma_id'], ['proforma.id'], ),
     sa.ForeignKeyConstraint(['income_proforma_id'], ['proforma.id'], ),
-    sa.ForeignKeyConstraint(['updated_by_id'], ['company.id'], name='fk_LineItem_updated_by_id', use_alter=True),
+    sa.ForeignKeyConstraint(['updated_by_id'], ['user.id'], name='fk_LineItem_updated_by_id', use_alter=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('loan',
@@ -204,9 +224,9 @@ def upgrade():
     sa.Column('length', sa.Integer(), nullable=True),
     sa.Column('updated_by_id', sa.Integer(), nullable=True),
     sa.Column('created_by_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['created_by_id'], ['company.id'], name='fk_Loan_created_by_id', use_alter=True),
+    sa.ForeignKeyConstraint(['created_by_id'], ['user.id'], name='fk_Loan_created_by_id', use_alter=True),
     sa.ForeignKeyConstraint(['proforma_id'], ['proforma.id'], ),
-    sa.ForeignKeyConstraint(['updated_by_id'], ['company.id'], name='fk_Loan_updated_by_id', use_alter=True),
+    sa.ForeignKeyConstraint(['updated_by_id'], ['user.id'], name='fk_Loan_updated_by_id', use_alter=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('deal_contact_role',
@@ -216,25 +236,36 @@ def upgrade():
     sa.ForeignKeyConstraint(['deal_contact_id'], ['deal_contact.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('locationcriteria',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('location_type', sa.String(length=255), nullable=True),
+    sa.Column('location_code', sa.String(length=2), nullable=True),
+    sa.Column('criteria_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['criteria_id'], ['investmentcriteria.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     # ### end Alembic commands ###
 
 
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
+    op.drop_table('locationcriteria')
     op.drop_table('deal_contact_role')
     op.drop_table('loan')
     op.drop_table('line_item')
+    op.drop_table('investmentcriteria')
     op.drop_table('deal_contact')
     op.drop_table('capital_expenditure')
     op.drop_table('roles_users')
     op.drop_table('proforma')
+    op.drop_table('investor')
     op.drop_table('file')
     op.drop_table('contact')
     op.drop_index(op.f('ix_user_api_key'), table_name='user')
     op.drop_table('user')
     op.drop_table('settings')
     op.drop_table('deal')
+    op.drop_table('tenant')
     op.drop_table('role')
-    op.drop_table('company')
     op.drop_table('address')
     # ### end Alembic commands ###

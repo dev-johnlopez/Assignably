@@ -13,7 +13,7 @@
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li>
-                            <a href="{{ url_for('deals.index') }}">Active Deals</a>
+                            <a href="{{ url_for('deals.index', subdomain=subdomain) }}">Active Deals</a>
                         </li>
                         <li>
                           <a href="#">
@@ -22,7 +22,19 @@
                           </a>
                         </li>
                         <li>
-                          <a href="{{ url_for('deals.create') }}">New Deal</a>
+                          <a href="{{ url_for('deals.create', subdomain=subdomain) }}">New Deal</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="waves-effect">
+                        <i class="ti-home"></i>
+                        <span> My Investors </span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="{{ url_for('investors.index', subdomain=subdomain) }}">Active</a>
                         </li>
                     </ul>
                 </li>
@@ -30,12 +42,12 @@
                 <li class="menu-title">Settings</li>
 
                 <li>
-                    <a href="{{ url_for('settings.notifications') }}" class="waves-effect waves-primary"><i
+                    <a href="{{ url_for('settings.notifications', subdomain=subdomain) }}" class="waves-effect waves-primary"><i
                             class="ti-settings"></i><span> Settings </span></a>
                 </li>
 
                 <li>
-                    <a href="{{ url_for('settings.company') }}" class="waves-effect waves-primary"><i
+                    <a href="{{ url_for('settings.company', subdomain=subdomain) }}" class="waves-effect waves-primary"><i
                             class="ti-user"></i><span> Company </span></a>
                 </li>
 

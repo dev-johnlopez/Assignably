@@ -41,7 +41,7 @@
           </tr>
           </thead>
           <tbody>
-            {% for user in current_user.company.users %}
+            {% for user in current_user.tenant.users %}
               <tr>
                   <td>{{ loop.index }}</td>
                   <td>{{ user }}</td>

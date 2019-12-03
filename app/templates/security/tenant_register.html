@@ -17,7 +17,7 @@
           <p class="text-muted mb-4 mt-3">Don't have an account? Create your own account, it takes less than a minute</p>
         </div>
 
-        <form action="{{ url_for('security.register', subdomain=subdomain) }}" method="POST" name="register_user_form">
+        <form action="{{ url_for('security.tenant_register') }}" method="POST" name="register_user_form">
             {{ register_user_form.hidden_tag() }}
             {{ register_user_form.contact.hidden_tag() }}
             {% if register_user_form.organization_name is defined %}

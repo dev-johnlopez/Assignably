@@ -176,7 +176,7 @@
                 <div class="dropdown-divider"></div>#}
 
                 <!-- item-->
-                <a href="{{ url_for_security('logout') }}" class="dropdown-item notify-item">
+                <a href="{{ url_for('security.logout') }}" class="dropdown-item notify-item">
                     <i class="remixicon-logout-box-line"></i>
                     <span>Logout</span>
                 </a>
@@ -199,7 +199,11 @@
         <div class="logo text-center">
             <span class="logo-lg">
                 <!--<span class="remixicon-quill-pen-line"></span><img src="{{ url_for('static', filename='backend/images/logo-light.png') }}" alt="" height="20">-->
-                <span class="logo-lg-text-light">Assignably</span>
+                {% if current_user.tenant.name is not none %}
+                  <span class="logo-lg-text-light">{{ current_user.tenant.name }}</span>
+                {% else %}
+                  <span class="logo-lg-text-light">Assignably</span>
+                {% endif %}
             </span>
             <span class="logo-sm">
                 <span class="logo-sm-text-light">A</span>
@@ -222,7 +226,7 @@
             </a>
             <div class="dropdown-menu">
                 <!-- item-->
-                <a href="{{ url_for('deals.create') }}" class="dropdown-item">
+                <a href="{{ url_for('deals.create', subdomain=subdomain) }}" class="dropdown-item">
                     <i class="fe-briefcase mr-1"></i>
                     <span>New Deal</span>
                 </a>

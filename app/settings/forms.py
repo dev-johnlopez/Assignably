@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms.fields.html5 import EmailField
-from wtforms import StringField, FormField, SelectMultipleField
+from wtforms import StringField, FormField, SelectMultipleField, SelectField, \
+                    RadioField, FieldList, IntegerField
 from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.validators import DataRequired
 from app.deals.forms import ContactForm
@@ -14,7 +15,7 @@ class SettingsForm(FlaskForm):
                             coerce=int)
 
 
-class CompanyForm(FlaskForm):
+class TenantForm(FlaskForm):
     name = StringField('Company Name', validators=[DataRequired()])
 
 

@@ -59,7 +59,11 @@
                   <a href="{{ url_for('landing.pricing') }}" class="nav-link text-dark">Pricing</a>
               </li>
               <li class="nav-item">
-                  <a href="{{ url_for_security('login') }}" class="nav-link text-dark">Login</a>
+                {% if subdomain is defined %}
+                  <a href="{{ url_for('security.user_login', subdomain=subdomain) }}" class="nav-link">Login</a>
+                {% else %}
+                  <a href="{{ url_for('security.user_login', subdomain=user.tenant.subdomain) }}" class="nav-link">Login</a>
+                {% endif %}
               </li>
           </ul>
       </div>
@@ -93,7 +97,9 @@
                         <a href="{{ url_for('landing.pricing') }}" class="nav-link">Pricing</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url_for_security('login') }}" class="nav-link">Login</a>
+
+                        <a href="{{ url_for('auth.login') }}"" class="nav-link">Login</a>
+                        {#<a href="{{ url_for_security('login') }}" class="nav-link">Login</a>#}
                     </li>
                 </ul>
             </div>

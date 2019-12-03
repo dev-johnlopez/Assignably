@@ -1,10 +1,11 @@
 from flask import Blueprint, g, render_template, redirect, url_for, g, flash, \
     request
-from flask_security import current_user, login_required, current_user
+from flask_security import current_user, current_user #, login_required
 from app import db
+from app.decorators import tenant_required, login_required
 from app.email import send_email
 from app.deals.forms import DealForm
-from app.auth.models import User, Company
+from app.auth.models import User, Tenant
 from app.deals.models import Deal, DealContact, DealContactRole, Contact, File
 import os
 import json
@@ -15,20 +16,25 @@ from botocore.client import Config
 
 bp = Blueprint('deals', __name__)
 
+#@bp.context_processor
+#def inject_subdomain():
+#    return dict(subdomain=current_user.tenant.subdomain)
+
 
 @bp.route('/index', methods=['GET', 'POST'])
 @bp.route('/', methods=['GET', 'POST'])
+@tenant_required
 @login_required
-def index():
-    deals = current_user.get_deals()
+def index(subdomain):
+    #deals = current_user.get_deals()
     return render_template('deals/index.html',
                            title='Active Deals',
-                           deals=deals)
+                           deals=[])
 
 
 @bp.route('/new', methods=['GET', 'POST'])
 @login_required
-def create():
+def create(subdomain):
     form = DealForm()
     if form.validate_on_submit():
         deal = Deal()
@@ -42,11 +48,12 @@ def create():
             file = File(url=file.url)
             deal.add_file(file)
         form.populate_obj(deal)
-        current_user.company.add_deal(deal)
-        db.session.add(current_user.company)
+        current_user.tenant.add_deal(deal)
+        db.session.add(current_user.tenant)
         db.session.add(deal)
         db.session.commit()
-        return redirect(url_for('.view', deal_id=deal.id))
+        return redirect(url_for('.view',
+                                subdomain=subdomain, deal_id=deal.id))
     deal_contact_data = {
         'contact': current_user.contact,
         'roles': [DealContactRole(name="Created By")]
@@ -54,14 +61,15 @@ def create():
     form.contacts.append_entry(deal_contact_data)
     return render_template('deals/new.html',
                            title="Create Deal",
-                           form=form)
+                           form=form,
+                           subdomain=subdomain)
 
 
-@bp.route('/<user_id>/new', methods=['GET', 'POST'])
-def iframe(user_id):
+@bp.route('/<tenant_id>/new', methods=['GET', 'POST'])
+def iframe(subdomain, tenant_id):
     form = DealForm()
     if form.validate_on_submit():
-        company = Company.query.get_or_404(user_id)
+        tenant = Tenant.query.get_or_404(tenant_id)
         deal = Deal()
         submitted_by = None
         for contact_form in form.contacts:
@@ -83,27 +91,28 @@ def iframe(user_id):
 
         form.populate_obj(deal)
         deal_contact = DealContact()
-        company.add_deal(deal)
+        tenant.add_deal(deal)
         db.session.add(deal)
-        db.session.add(company)
+        db.session.add(tenant)
         db.session.commit()
-        recipient = company.users[0].email
-        if company.get_settings().partnership_email_recipient is not None:
-            recipient = company.get_settings().partnership_email_recipient
+        recipient = tenant.users[0].email
+        if tenant.get_settings().partnership_email_recipient is not None:
+            recipient = tenant.get_settings().partnership_email_recipient
         send_email('New Deal Notification!',
                    sender='support@assignably.com', recipients=[recipient],
                    text_body=render_template('emails/new_deal.txt',
-                                             company=company,
+                                             tenant=tenant,
                                              submitted_by=submitted_by,
                                              deal=deal),
                    html_body=render_template('emails/new_deal.html',
-                                             company=company,
+                                             tenant=tenant,
                                              submitted_by=submitted_by,
                                              deal=deal),
                    attachments=[],
                    sync=True)
         return render_template('deals/submitted.html',
-                               user_id=user_id)
+                               user_id=user_id,
+                               subdomain=subdomain)
 
     if len(form.contacts) == 0:
         deal_contact_data = {
@@ -112,34 +121,38 @@ def iframe(user_id):
         }
         form.contacts.append_entry(deal_contact_data)
     return render_template('deals/iframe.html',
-                           form=form)
+                           form=form,
+                           subdomain=subdomain)
 
 
 @bp.route('/<deal_id>/view')
 @login_required
-def view(deal_id):
+def view(subdomain, deal_id):
     deal = Deal.query.get_or_404(deal_id)
     return render_template('deals/view.html',
                            title="{}".format(deal),
-                           deal=deal)
+                           deal=deal,
+                           subdomain=subdomain)
 
 
 @bp.route('/<deal_id>/delete')
 @login_required
-def delete(deal_id):
+def delete(subdomain, deal_id):
     deal = Deal.query.get_or_404(deal_id)
     db.session.delete(deal)
     db.session.commit()
-    return redirect(url_for('deals.index'))
+    return redirect(url_for('deals.index',
+                            subdomain=subdomain))
 
 
 @bp.route('/<deal_id>/photos')
 @login_required
-def add_photos(deal_id):
+def add_photos(subdomain, deal_id):
     deal = Deal.query.get_or_404(deal_id)
     return render_template('deals/dropzone.html',
                            title="Upload Photos",
-                           deal=deal)
+                           deal=deal,
+                           subdomain=subdomain)
 
 
 @bp.route('/<deal_id>/uploads', methods=['GET', 'POST'])

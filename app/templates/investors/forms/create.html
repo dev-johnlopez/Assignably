@@ -1,0 +1,23 @@
+{% from "common/macros/_horizontal_form.html" import render_field_with_errors, render_monetary_field_with_errors %}
+
+
+<form class="form" enctype="multipart/form-data" method="post" role="form" action="#" id="submit-form">
+  {{ form.hidden_tag() }}
+  {{ form.user.hidden_tag() }}
+  {{ form.user.contact.hidden_tag() }}
+  <div class="card-box">
+    <h5 class="card-title">Investor Info</h5>
+    <hr />
+    {{ render_field_with_errors(form.user.contact.first_name, class="form-control", required=True) }}
+    {{ render_field_with_errors(form.user.contact.last_name, class="form-control", required=True) }}
+    {{ render_field_with_errors(form.user.contact.phone, class="form-control", required=True) }}
+    {{ render_field_with_errors(form.user.contact.email, class="form-control", required=True) }}
+    <hr />
+  </div>
+  {% include 'investors/forms/criteria.html' %}
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary waves-effect waves-light">
+        Submit
+    </button>
+  </div>
+</form>

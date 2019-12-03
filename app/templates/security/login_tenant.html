@@ -8,17 +8,15 @@
   <div class="card-body p-4">
     <div class="text-center w-75 m-auto">
       <h2>
-            <span class="logo-sm-text-light">{% if tenant_name is defined %}{{ tenant_name }}{% else %}Assignably{% endif %}</span>
+            <span class="logo-sm-text-light">Assignably</span>
       </h2>
-      <p class="text-muted mb-4 mt-3">Enter your email address and password to access admin panel.</p>
     </div>
 
-    <form action="{{ url_for('security.user_login', subdomain=subdomain) }}" method="POST" name="login_user_form">
+
+    <form action="{{ url_for('security.login') }}" method="GET" name="login_user_form">
         {{ login_user_form.hidden_tag() }}
-        {#{{ render_field(login_user_form.subdomain) }}#}
-        {{ render_field(login_user_form.next) }}
         <div class="form-group mb-3">
-            <label for="emailaddress">Email address</label>
+            <label for="emailaddress">Log into your account</label>
             {{ render_field(login_user_form.email,id="inputEmail", class="form-control", placeholder="Email Address", autofocus="true", required="true") }}
             {% if login_user_form.email.errors %}
               {% for error in login_user_form.email.errors %}
@@ -29,29 +27,9 @@
             {% endif %}
         </div>
 
-        <div class="form-group mb-3">
-            <label for="password">Password</label>
-            {{ render_field(login_user_form.password,id="inputPassword", class="form-control", placeholder="Password", required="true") }}
-            {% if login_user_form.password.errors %}
-              {% for error in login_user_form.password.errors %}
-                <div class="invalid-feedback d-block">
-                  {{ error }}
-                </div>
-              {% endfor %}
-            {% endif %}
-        </div>
-
-        <div class="form-group mb-3">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="checkbox-signin" checked>
-                <label class="custom-control-label" for="checkbox-signin">Remember me</label>
-            </div>
-        </div>
-
         <div class="form-group mb-0 text-center">
-            <button class="btn btn-primary btn-block" type="submit"> Log In </button>
+            <button class="btn btn-primary btn-block" type="submit"> Submit </button>
         </div>
-
     </form>
   </div> <!-- end card-body -->
 </div>

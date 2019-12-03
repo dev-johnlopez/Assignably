@@ -1,0 +1,85 @@
+<form action="{{ url_for('security.login') }}" method="POST" name="login_user_form">
+  {{ login_user_form.hidden_tag() }}
+  {{ render_field(login_user_form.next) }}
+  <div id="rootwizard">
+      <ul class="nav nav-pills nav-justified form-wizard-header mb-4" style="display:none;">
+          <li class="nav-item">
+              <a href="#basictab1" data-toggle="tab" class="nav-link">
+                  <span class="number">1</span>
+                  <span class="d-none d-sm-inline">Account</span>
+              </a>
+          </li>
+          <li class="nav-item">
+              <a href="#basictab2" data-toggle="tab" class="nav-link">
+                  <span class="number">2</span>
+                  <span class="d-none d-sm-inline">Profile</span>
+              </a>
+          </li>
+          <li class="nav-item">
+              <a href="#basictab3" data-toggle="tab" class="nav-link">
+                  <span class="number">3</span>
+                  <span class="d-none d-sm-inline">Finish</span>
+              </a>
+          </li>
+      </ul>
+
+      <div class="tab-content b-0 mb-0">
+          <div class="tab-pane" id="basictab1">
+              <div class="row">
+                  <div class="col-12">
+                    <div class="form-group mb-3">
+                        <label for="emailaddress">Log into your account</label>
+                        {{ render_field(login_user_form.email,id="inputEmail", class="form-control", placeholder="Email Address", autofocus="true", required="true") }}
+                        {% if login_user_form.email.errors %}
+                          {% for error in login_user_form.email.errors %}
+                          <div class="invalid-feedback d-block">
+                            {{ error }}
+                          </div>
+                          {% endfor %}
+                        {% endif %}
+                    </div>
+                  </div> <!-- end col -->
+              </div> <!-- end row -->
+          </div>
+
+          <div class="tab-pane" id="basictab2">
+              <div class="row">
+                  <div class="col-12">
+                    <div class="form-group mb-3">
+                        <label for="password">Password</label>
+                        {{ render_field(login_user_form.password,id="inputPassword", class="form-control", placeholder="Password", required="true") }}
+                        {% if login_user_form.password.errors %}
+                          {% for error in login_user_form.password.errors %}
+                            <div class="invalid-feedback d-block">
+                              {{ error }}
+                            </div>
+                          {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="checkbox-signin" checked>
+                            <label class="custom-control-label" for="checkbox-signin">Remember me</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-0 text-center">
+                        <button class="btn btn-primary btn-block" type="submit"> Log In </button>
+                    </div>
+                  </div> <!-- end col -->
+              </div> <!-- end row -->
+          </div>
+
+          <ul class="list-inline wizard mb-0">
+              <li class="previous list-inline-item">
+                  <a href="javascript: void(0);" class="btn btn-secondary">Previous</a>
+              </li>
+              <li class="next list-inline-item float-right">
+                  <a href="javascript: void(0);" class="btn btn-secondary">Next</a>
+              </li>
+          </ul>
+
+      </div> <!-- tab-content -->
+  </div> <!-- end #basicwizard-->
+</form>
