@@ -14,7 +14,7 @@ docutils==0.14
 dotenv==0.0.5
 elasticsearch==7.0.1
 enum==0.4.7
-Flask==0.12.2
+Flask==1.0
 Flask-Admin==1.5.3
 Flask-BabelEx==0.9.3
 Flask-Boto3==0.3.2
