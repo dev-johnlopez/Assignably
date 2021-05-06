@@ -18,7 +18,7 @@ Flask==0.12.2
 Flask-Admin==1.5.3
 Flask-BabelEx==0.9.3
 Flask-Boto3==0.3.2
-Flask-Cors==3.0.7
+Flask-Cors==3.0.9
 Flask-Dropzone==1.5.3
 Flask-HTTPAuth==3.3.0
 Flask-Login==0.4.1
