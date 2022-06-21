@@ -42,7 +42,7 @@ jmespath==0.9.3
 Mako==1.0.10
 MarkupSafe==1.0
 more-itertools==5.0.0
-numpy==1.16.4
+numpy==1.22.0
 packaging==19.0
 passlib==1.7.1
 pathlib2==2.3.3
